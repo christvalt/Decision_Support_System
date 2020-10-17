@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\camerum\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\camerum\\.nuget\\packages"
+    ]
+  }
+}
