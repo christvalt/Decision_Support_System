@@ -9,5 +9,5 @@ os.chdir(dname)
 
 df = pd.read_csv('FTSE_MIB.csv') # dataframe (series)
 df.plot(x='FTSE_MIB',y='FTSE_MIB')
-plt.title('FTSE_MIB', color='black')
+plt.title('index', color='black')
 plt._show()
