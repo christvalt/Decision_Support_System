@@ -7,33 +7,41 @@ using Microsoft.EntityFrameworkCore;
 using SsdWebApi.Models;
 namespace SsdWebApi.Controllers {
     [ApiController]
-    [Route ("api/Stagione")]
-    public class StagioneController : ControllerBase {
-        private readonly StagioneContext _context;
-        public StagioneController (StagioneContext context) {
+    [Route ("api/Indici")]
+    public class IndiciController : ControllerBase {
+        private readonly IndiceContext _context;
+        Persistence P;
+        public IndiciController (IndiceContext context) {
             _context = context;
+           P = new Persistence(context);
         }
 
         [HttpGet]
-        public ActionResult<List<Stagione>> GetAll () => _context.cronistoria.ToList ();
+        //public ActionResult<List<Indici>> GetAll () =>_context.indici.ToList ();
+         //public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
         // GET by ID action
-        [HttpGet ("{id}")]
-        public async Task<ActionResult<Stagione>> GetStagione (int id) {
-            var stagioneItem = await _context.cronistoria.FindAsync (id);
-            if (stagioneItem == null) {
-                return NotFound ();
-            }
-            return stagioneItem;
+        [HttpGet ("{id}", Name="GetSerie")]
+        public  List<String> GetSerie (int id) {
+             if(id>8) id=8;
+
+        //     String interpreter ="knkd";
+        //     String enviroment ="ggserfg";
+        //     int timeout =1000;
+        //   //  pythonruner  Pr =new pythonruner(interpreter ,enviroment,timeout);
+        //     String command ="dfwrtgwrs";
+        //   //  Pr.runDosCommand(command);
+            return P.readIndex(id);
         }
 
+       /*
         // POST action
         // POST: api/Stagione/PostStagioneItem
         [HttpPost]
         [Route ("[action]")]
-        public string PostStagioneItem ([FromBody] Stagione item) {
-            string res = "Anno " + item.anno;
+        public string PostStagioneItem ([FromBody] Indice item) {
+            string res = "Data " + item.Data;
             try {
-                _context.cronistoria.Add (item);
+                _context.indici.Add (item);
                 _context.SaveChangesAsync ();
             } catch (Exception ex) {
                 Console.WriteLine ("[ERROR] " + ex.Message);
@@ -46,13 +54,13 @@ namespace SsdWebApi.Controllers {
         // PUT action
         // PUT: api/Stagione/10
         [HttpPut ("{id}")]
-        public async Task<IActionResult> PutStagione (int id, [FromBody] Stagione item) {
+        public async Task<IActionResult> PutStagione (int id, [FromBody] Indice item) {
             if (id != item.id) return BadRequest ();
             _context.Entry (item).State = EntityState.Modified;
             try {
                 await _context.SaveChangesAsync ();
             } catch (Exception ex) {
-                if (!_context.cronistoria.Any (s => s.id == id)) {
+                if (!_context.indici.Any (s => s.id == id)) {
                     return NotFound ();
                 } else {
                     Console.WriteLine ("[ERROR] " + ex.Message);;
@@ -63,14 +71,14 @@ namespace SsdWebApi.Controllers {
         // DELETE action
         // DELETE: api/Stagione/10
         [HttpDelete ("{id}")]
-        public async Task<ActionResult<Stagione>> DeleteTodoItem (int id) {
-            var item = await _context.cronistoria.FindAsync (id);
+        public async Task<ActionResult<Indice>> DeleteTodoItem (int id) {
+            var item = await _context.indici.FindAsync (id);
             if (item == null) {
                 return NotFound ();
             }
-            _context.cronistoria.Remove (item);
+            _context.indici.Remove (item);
             await _context.SaveChangesAsync ();
             return item;
-        }
+        }*/
     }
 }

@@ -1,0 +1,56 @@
+using System;
+using Microsoft.Data.Sqlite;
+namespace SsdWebApi
+{
+        public class Persistence
+        {
+            public Persistence()
+            { 
+                testDB();
+            }
+            //creation de la DB 
+            public void testDB()
+
+            { 
+                var connectionStringBuilder = new SqliteConnectionStringBuilder();
+                //Use DB in project directory. If it does not exist, create it:
+                connectionStringBuilder.DataSource = "./finindices.sqlite";
+                using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString))
+                { connection.Open();
+                //Create a table (drop if already exists):
+                var delTableCmd = connection.CreateCommand();
+                delTableCmd.CommandText = "DROP TABLE IF EXISTS indici";
+                delTableCmd.ExecuteNonQuery();
+                var createTableCmd = connection.CreateCommand();
+                createTableCmd.CommandText = "CREATE TABLE indici(id INTEGER PRIMARY KEY, Data int, SP_500 double)";
+                createTableCmd.ExecuteNonQuery();
+                //Seed some data:
+                using (var transaction = connection.BeginTransaction())
+                { var insertCmd = connection.CreateCommand();
+                insertCmd.CommandText = "INSERT INTO indici (Data,SP_500) VALUES(2014,'A')";
+                insertCmd.ExecuteNonQuery();
+                insertCmd.CommandText = "INSERT INTO indici(Data,SP_500) VALUES(2015,'B')";
+                insertCmd.ExecuteNonQuery();
+                insertCmd.CommandText = "INSERT INTO indici (Data,SP_500) VALUES(2016,'B')";
+                insertCmd.ExecuteNonQuery();
+                insertCmd.CommandText = "INSERT INTO indici (Data,SP_500) VALUES(2017,'B')";
+                insertCmd.ExecuteNonQuery();
+                insertCmd.CommandText = "INSERT INTO indici (Data,SP_500) VALUES(2018,'D')";
+                insertCmd.ExecuteNonQuery();
+                transaction.Commit();
+                }
+                //Read the newly inserted data:
+                var selectCmd = connection.CreateCommand();
+                selectCmd.CommandText = "SELECT Data, SP_500 FROM indici";
+                using (var reader = selectCmd.ExecuteReader())
+                {
+                while (reader.Read())
+                { int Data = Convert.ToInt32(reader.GetString(0));
+                var message = Data+" "+(Data+1)+" SP_500 "+reader.GetString(1);
+                Console.WriteLine(message);
+                }
+                }
+                }
+            }
+        }
+}

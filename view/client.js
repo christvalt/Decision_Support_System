@@ -22,6 +22,11 @@ function findAll() {
   });
 }
 
+function readResult(str)
+{ document.getElementById('txtarea').value += str;
+console.log(str);
+}
+
 function findById() {
   var id = $("#txtId").val();
   $.ajax({
@@ -64,3 +69,35 @@ function postItem() {
   };
   $.ajax(options);
 }
+//delete 
+function deleteId() {
+  var options = {};
+  options.url = "https://localhost:5001/api/Stagione/"+ $("#txtId").val();
+  options.type = "DELETE";
+  options.contentType = "application/json";
+  options.success = function (msg) {
+  alert(msg);
+  };
+  options.error = function (err) { alert(err.statusText); };
+  $.ajax(options);
+  }
+
+  //put
+  function updateId() {
+    var id = $('#txtId').val();
+    var anno = $('#txtNewAnno').val();
+    var options = {};
+    options.url = "https://localhost:5001/api/Stagione/"+ $("#txtId").val();
+    options.type = "PUT";
+    options.data = JSON.stringify({
+    "id": Number(id),
+    "anno": Number(anno),
+    "serie": 'C'
+    });
+    options.dataType = "json";
+    options.contentType = "application/json";
+    options.success = function (msg) { alert(msg); };
+    options.error = function (err) { alert(err.responseText); };
+    $.ajax(options);
+    };
+  
