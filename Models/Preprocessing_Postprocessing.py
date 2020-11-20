@@ -8,6 +8,8 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 df = pd.read_csv('FTSE_MIB.csv') # dataframe (series)
-df.plot(x='FTSE_MIB',y='FTSE_MIB')
-plt.title('index', color='black')
+#df.set_index("index")
+df.plot(x='FTSE_MIB',y='index')
+
+plt.title('FTSE_MIB', color='black')
 plt._show()
