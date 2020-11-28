@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kjE0D1TUuTLmaBU9Rx2+EMzuNPqfDMvtOqxWSSUjl5jp9uA95YV/DisXIILb99eF4cANQFwBHlW3PL5Lf96TGA==",
+  "dgSpecHash": "HgcuqL01G/Id1bjYrmg831FcTwfcgVuN3zK0FdLreYMpetvFUJP7pOW8xAJG/yU4lcJp+vVJqx+fS7Unfnel+A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
+  "projectFilePath": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\camerum\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\camerum\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
