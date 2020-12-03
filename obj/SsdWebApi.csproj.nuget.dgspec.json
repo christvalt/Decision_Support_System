@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {}
+    "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {}
   },
   "projects": {
-    "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {
+    "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
+        "projectUniqueName": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
         "projectName": "SsdWebApi",
-        "projectPath": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
+        "projectPath": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
         "packagesPath": "C:\\Users\\camerum\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\obj\\",
+        "outputPath": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\camerum\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -63,6 +63,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.4, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[*, )"
             }
           },
           "imports": [

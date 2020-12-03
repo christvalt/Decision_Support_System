@@ -1,7 +1,11 @@
 import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 import os, sys, io, base64
+'''
+prendi la mia seria la si lavora e genera una lunga stinga che contiene una imagine 
 
+******nella cartella server dentro model devo fare python forcastStat.py seriea_storica.csv  
+'''
 def print_figure(fig):
 	"""
 	Converts a figure (as created e.g. with matplotlib or seaborn) to a png image and this 
@@ -22,7 +26,7 @@ if __name__ == "__main__":
    print('MAPE Argument List:', str(sys.argv), ' first true arg:',sys.argv[1])   
    
    dffile = sys.argv[1]
-   df = pd.read_csv("../"+dffile)
+   df = pd.read_csv("C:/Users/camerum/Desktop/Decision_Support_system/SsdWebApi\Models/"+dffile)
    
    plt.plot(df)
    #plt.show()
