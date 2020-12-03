@@ -9,8 +9,8 @@ namespace SsdWebApi
         public string forecastSARIMAindex(String attribute)
         {
             string res = "\"text\":\"";
-            string interpreter = "C:/Users/pc/anaconda3/envs/opanalytics/python.exe"; //ha messo python.exe
-            string environment = "opanalytics";
+            string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe"; //ha messo python.exe
+            string environment = "open";
             int timeout = 10000;
             PythonRunner PR = new PythonRunner(interpreter, environment, timeout);
             Bitmap bmp = null;

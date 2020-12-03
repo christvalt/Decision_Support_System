@@ -8178,7 +8178,7 @@
       "Microsoft.EntityFrameworkCore.SQLite >= 3.1.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.9",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.4",
-      "System.Drawing.Common >= *"
+      "System.Drawing.Common >= 5.0.0"
     ]
   },
   "packageFolders": {
@@ -8246,7 +8246,7 @@
           },
           "System.Drawing.Common": {
             "target": "Package",
-            "version": "[*, )"
+            "version": "[5.0.0, )"
           }
         },
         "imports": [

@@ -306,3 +306,8 @@ C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\obj\Debug\netcoreapp3
 C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\obj\Debug\netcoreapp3.1\staticwebassets\SsdWebApi.StaticWebAssets.Manifest.cache
 C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\obj\Debug\netcoreapp3.1\staticwebassets\SsdWebApi.StaticWebAssets.xml
 C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\obj\Debug\netcoreapp3.1\SsdWebApi.genruntimeconfig.cache
+C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\camerum\Desktop\Decision_Support_system\SsdWebApi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
