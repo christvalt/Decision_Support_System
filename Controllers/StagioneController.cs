@@ -24,6 +24,11 @@ namespace SsdWebApi.Controllers {
         public  List<String> GetSerie (int id) {
              if(id>8) id=8;
 
+
+
+              string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
+                string attribute =indices[id];
+
         //     String interpreter ="knkd";
         //     String enviroment ="ggserfg";
         //     int timeout =1000;
