@@ -41,6 +41,8 @@ namespace SsdWebApi.Controllers {
         //     String command ="dfwrtgwrs";
         //   //  Pr.runDosCommand(command);
             var index= P.readIndex(Int32.Parse(attribute));
+            
+           // var ddd= P.readIndex(Convert.ToInt32(attribute));
             return res;
         }
 
