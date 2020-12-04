@@ -21,11 +21,11 @@ namespace SsdWebApi.Controllers {
          //public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-        public String GetSerie (int id) {
+        public string GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
-             string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
+             string[] indices = new string[]{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
              string attribute =indices[id];
 
 
@@ -33,6 +33,9 @@ namespace SsdWebApi.Controllers {
              Forecast  F = new Forecast();
              res+=F.forecastSARIMAindex(attribute);
              res+="}";
+  
+             var  numVal = Convert.ToInt32(attribute);
+             var inde =P.readIndex(numVal);
 
         //     String interpreter ="knkd";
         //     String enviroment ="ggserfg";
@@ -40,7 +43,7 @@ namespace SsdWebApi.Controllers {
         //   //  pythonruner  Pr =new pythonruner(interpreter ,enviroment,timeout);
         //     String command ="dfwrtgwrs";
         //   //  Pr.runDosCommand(command);
-            var index= P.readIndex(Int32.Parse(attribute));
+            //var index= P.readIndex(Int32.Parse(attribute));
             
            // var ddd= P.readIndex(Convert.ToInt32(attribute));
             return res;
