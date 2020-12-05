@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {}
+    "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {
+    "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
+        "projectUniqueName": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
         "projectName": "SsdWebApi",
-        "projectPath": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
+        "projectPath": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\SsdWebApi.csproj",
         "packagesPath": "C:\\Users\\camerum\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\obj\\",
+        "outputPath": "c:\\Users\\camerum\\Desktop\\Decision_Support_system\\SsdWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\camerum\\AppData\\Roaming\\NuGet\\NuGet.Config",
