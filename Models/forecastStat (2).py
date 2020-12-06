@@ -28,7 +28,7 @@ if __name__ == "__main__":
    print('MAPE Argument List:', str(sys.argv), ' first true arg:',sys.argv[1])   
    
    dffile = sys.argv[1]
-   df = pd.read_csv("C:/Users/camerum/Desktop/Decision_Support_system/SsdWebApi\Models/"+dffile)
+   df = pd.read_csv("C:/Users/camerum/Desktop/Decision_Support_system/SsdWebApi/Models/"+dffile)
    
    # preprocessing of data
 #transform my data to and numpy array 
