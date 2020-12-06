@@ -6,6 +6,9 @@ namespace SsdWebApi
 
     public class Forecast
     {
+        public Forecast(){
+
+        }
         public string forecastSARIMAindex(String attribute)
         {
             string res = "\"text\":\"";
@@ -17,7 +20,7 @@ namespace SsdWebApi
 
             try
             {
-                string command = $"Models/forecastStat.py {attribute}.csv";
+                string command = $"Models/forecastStat (2).py {attribute}.csv";
                 string list = PR.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
@@ -72,10 +75,6 @@ namespace SsdWebApi
 
             lend:
             return res;
-
-
-
-
     }
 
     }
