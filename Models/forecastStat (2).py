@@ -8,7 +8,6 @@ import statsmodels.api as sm
 import pmdarima as pm
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-
 def print_figure(fig):
 	"""
 	Converts a figure (as created e.g. with matplotlib or seaborn) to a png image and this 
@@ -45,12 +44,14 @@ cutpoint = int(0.9*len(df))
 train = df[:cutpoint]
 test = df[cutpoint:]
 
+
 #another corelation more good
 import statsmodels.api as sm
 sm.graphics.tsa.plot_acf(train.values, lags=440)
 plt.show
 
-#primo verro modello 
+
+
 model = pm.auto_arima(train.values, start_p=1, start_q=1,
                         test='adf', max_p=3, max_q=3, m=5,
                         start_P=1, seasonal=True,
@@ -68,18 +69,16 @@ yfore = fitted.predict(n_periods=480) # forecast
 ypred = fitted.predict_in_sample()
 plt.plot(train.values)
 plt.plot(ypred)
-plt.plot(yfore)
-#plt.plot([None for i in ypred] + [x for x in yfore])
-#plt.show()
 
-   
    
 plt.plot(df)
 plt.plot(yfore)
    #plt.show()
-   #gcf=get current figure  quidi la mia ultima imagine deve essere sempre l0ulima della forcast
+   
    # Finally, print the chart as base64 string to the console.
 print_figure(plt.gcf())
+#print the forcast value
+print('Actual:', yfore)  
    
 
    
