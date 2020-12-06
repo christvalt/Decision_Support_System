@@ -12,7 +12,9 @@ namespace SsdWebApi {
         public int US_TReasury { get; set; }
     }
     
-    public class Indiceitem {
+  
+}
+/*  public class Indiceitem {
         public int id { get; set; }
         public int Data { get; set; }
 
@@ -23,5 +25,4 @@ namespace SsdWebApi {
         public int MSCI_EURO { get; set; }
         public int All_Bonds { get; set; }
         public int US_TReasury { get; set; }
-    }
-}
+    }*/

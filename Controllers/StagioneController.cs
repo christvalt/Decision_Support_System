@@ -18,14 +18,15 @@ namespace SsdWebApi.Controllers {
 
         [HttpGet]
         //public ActionResult<List<Indici>> GetAll () =>_context.indici.ToList ();
-         //public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
+         public ActionResult<List<Indici>> GetAll () =>
+          _context.indici.ToList ();
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
         public string GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
-             string[] indices = new string[]{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
+             string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
              string attribute =indices[id];
 
 
