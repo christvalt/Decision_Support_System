@@ -22,7 +22,7 @@ namespace SsdWebApi.Controllers {
          
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-          public  List<String> GetSerie (int id) {
+          public  String GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
@@ -37,8 +37,8 @@ namespace SsdWebApi.Controllers {
              res+="}";
   
             // var  numVal = Convert.ToInt32(attribute);
-             var index =P.readIndex(id);
-             return P.readIndex(id);
+             var index =P.readIndex(attribute);
+             return res;
         }
 
        /*

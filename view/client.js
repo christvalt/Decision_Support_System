@@ -30,7 +30,7 @@ console.log(str);
 function findById() {
   var id = $("#txtId").val();
   $.ajax({
-   // url: "https://localhost:5001/api/Indici/" + id,
+    url: "https://localhost:5001/api/Indici/" + id,
     type: "GET",
     contentType: "application/json",
     data: "",
