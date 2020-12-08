@@ -22,12 +22,13 @@ namespace SsdWebApi.Controllers {
          
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-          public  String GetSerie (int id) {
+          public  List<String> GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
              string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
              string attribute =indices[id];
+            // Console.WriteLine(indices);
 
 
 
@@ -37,18 +38,7 @@ namespace SsdWebApi.Controllers {
   
             // var  numVal = Convert.ToInt32(attribute);
              var index =P.readIndex(id);
-
-        //     String interpreter ="knkd";
-        //     String enviroment ="ggserfg";
-        //     int timeout =1000;
-        //   //  pythonruner  Pr =new pythonruner(interpreter ,enviroment,timeout);
-        //     String command ="dfwrtgwrs";
-        //   //  Pr.runDosCommand(command);
-            //var index= P.readIndex(Int32.Parse(attribute));
-            
-           // var ddd= P.readIndex(Convert.ToInt32(attribute));
-            //return res;
-             return res;
+             return P.readIndex(id);
         }
 
        /*

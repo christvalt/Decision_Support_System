@@ -48,7 +48,7 @@ if __name__ == "__main__":
    
 #Sarimax model  
 from statsmodels.tsa.statespace.sarimax import SARIMAX
-sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5))
+sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,2))
 sfit = sarima_model.fit()
 print(sfit.summary())
 sfit.plot_diagnostics(figsize=(10, 6))
@@ -93,10 +93,12 @@ plt.plot([None for x in range(12)]+[x for x in expdata[12:]])
 plt.plot(df)
 plt.plot(reconstruct)
 plt.plot([None for x in expdata]+[x for x in expfore])
+print('Actual predict:', forecast_val)   
+
 plt.show
 
 plt.plot(forecast_val)
-   #plt.show()
+plt.show()
    
    # Finally, print the chart as base64 string to the console.
 print_figure(plt.gcf())

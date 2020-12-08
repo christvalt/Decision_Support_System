@@ -6,7 +6,7 @@ function init() {
 
 function findAll() {
   $.ajax({
-    url: "http://localhost:5000/api/Stagione",
+    url: "https://localhost:5001/api/Indici",
     type: "GET",
     contentType: "application/json",
     success: function (result) {
@@ -30,7 +30,7 @@ console.log(str);
 function findById() {
   var id = $("#txtId").val();
   $.ajax({
-    url: "https://localhost:5001/api/Stagione/" + id,
+    url: "https://localhost:5001/api/Indici/" + id,
     type: "GET",
     contentType: "application/json",
     data: "",
