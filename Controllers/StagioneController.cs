@@ -18,11 +18,11 @@ namespace SsdWebApi.Controllers {
 
         [HttpGet]
         //public ActionResult<List<Indici>> GetAll () =>_context.indici.ToList ();
-         public ActionResult<List<Indici>> GetAll () =>
-          _context.indici.ToList ();
+               public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
+         
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-        public string GetSerie (int id) {
+          public  List<String> GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
@@ -36,7 +36,7 @@ namespace SsdWebApi.Controllers {
              res+="}";
   
              var  numVal = Convert.ToInt32(attribute);
-             var inde =P.readIndex(numVal);
+             var inde =P.readIndex(id);
 
         //     String interpreter ="knkd";
         //     String enviroment ="ggserfg";
@@ -47,7 +47,8 @@ namespace SsdWebApi.Controllers {
             //var index= P.readIndex(Int32.Parse(attribute));
             
            // var ddd= P.readIndex(Convert.ToInt32(attribute));
-            return res;
+            //return res;
+             return P.readIndex(id);
         }
 
        /*

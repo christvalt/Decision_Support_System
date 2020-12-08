@@ -48,7 +48,7 @@ if __name__ == "__main__":
    
 #Sarimax model  
 from statsmodels.tsa.statespace.sarimax import SARIMAX
-sarima_model = SARIMAX(train, order=(0,0,1), seasonal_order=(0,1,1,5))
+sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5))
 sfit = sarima_model.fit()
 print(sfit.summary())
 sfit.plot_diagnostics(figsize=(10, 6))
@@ -81,7 +81,21 @@ def forecast_accuracy(forecast_val, test):
 print( forecast_accuracy(forecast_val, test) )
    #sm.graphics.tsa.plot_acf(train.values, lags=100)
 plt.show
+reconstruct = np.exp(np.r_[train,test].cumsum()+logdata[0])
+reconstruct = np.exp(np.r_[ypred,forecast_val].cumsum()+logdata[0])
 
+ypred = pd.Series(ypred)
+expdata = np.exp(ypred) # unlog
+plt.plot(expdata)
+expfore = np.exp(forecast_val)
+plt.plot(forecast_val)
+plt.plot([None for x in range(12)]+[x for x in expdata[12:]])
+plt.plot(df)
+plt.plot(reconstruct)
+plt.plot([None for x in expdata]+[x for x in expfore])
+plt.show
+
+plt.plot(forecast_val)
    #plt.show()
    
    # Finally, print the chart as base64 string to the console.
