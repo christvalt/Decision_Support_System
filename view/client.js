@@ -30,7 +30,7 @@ console.log(str);
 function findById() {
   var id = $("#txtId").val();
   $.ajax({
-    url: "https://localhost:5001/api/Indici/" + id,
+   // url: "https://localhost:5001/api/Indici/" + id,
     type: "GET",
     contentType: "application/json",
     data: "",
@@ -102,7 +102,7 @@ function deleteId() {
     };
 
     function SelectSerie() {
-      var id = $("#txtId").val();
+      var id = $('#txtId').val();
       $.ajax({
         url: "https://localhost:5001/api/Indici/" + id,
         type: "GET",
@@ -122,4 +122,21 @@ function deleteId() {
       });
      
    };
+
+   function showResult(res) {
+     document.getElementById('textarea').value +=res.text;
+     renderImage(res.img);
+     
+   }
+
+   function renderImage(base64Imagestring) {
+
+     var basestr64=base64Imagestring;
+     basestr64=basestr64-substring(0,basestr64.lenght-1);
+     basestr64=basestr64-substring(2,basestr64.lenght);
+     var image =new Image();
+     image.src ="data:image/png;base64,"+ basestr64;
+     document.body .appendChild(image);
+
+   }
   
