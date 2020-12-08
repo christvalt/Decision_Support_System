@@ -22,7 +22,7 @@ namespace SsdWebApi.Controllers {
          
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-          public  List<String> GetSerie (int id) {
+          public  String GetSerie (int id) {
 
             string res ="{";
              if(id>8) id=8;
@@ -35,8 +35,8 @@ namespace SsdWebApi.Controllers {
              res+=F.forecastSARIMAindex(attribute);
              res+="}";
   
-             var  numVal = Convert.ToInt32(attribute);
-             var inde =P.readIndex(id);
+            // var  numVal = Convert.ToInt32(attribute);
+             var index =P.readIndex(id);
 
         //     String interpreter ="knkd";
         //     String enviroment ="ggserfg";
@@ -48,7 +48,7 @@ namespace SsdWebApi.Controllers {
             
            // var ddd= P.readIndex(Convert.ToInt32(attribute));
             //return res;
-             return P.readIndex(id);
+             return res;
         }
 
        /*
