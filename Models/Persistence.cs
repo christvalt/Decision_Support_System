@@ -14,7 +14,7 @@ namespace SsdWebApi {
             _context = context;
            
         }
-             public List<string> readIndex(int  id){
+             public List<string> readIndex(int id){
  
                 List<string> serie =new List<string>();   
                 string[] indices = new string []{"id","Data","SP_500","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_Treasury"};
