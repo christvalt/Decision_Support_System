@@ -20,7 +20,7 @@ namespace SsdWebApi
 
             try
             {
-                string command = $"Models/forecastStat.py{attribute}.csv";
+                string command = $"Models/forecastStat.py {attribute}.csv";
                 string list = PR.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))

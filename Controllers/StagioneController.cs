@@ -36,8 +36,8 @@ namespace SsdWebApi.Controllers {
              res+=F.forecastSARIMAindex(attribute);
              res+="}";
   
-            // var  numVal = Convert.ToInt32(attribute);
-             var index =P.readIndex(attribute);
+             var  numVal = Convert.ToInt32(attribute);
+             var index =P.readIndex(numVal);
              return res;
         }
 
