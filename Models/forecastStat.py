@@ -2,6 +2,9 @@ import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 import os, sys, io, base64
 
+
+# 011 011
+
 '''
 prendi la mia seria la si lavora e genera una lunga stinga che contiene una imagine 
 
@@ -29,7 +32,8 @@ if __name__ == "__main__":
    
    dffile = sys.argv[1]
    df = pd.read_csv("C:/Users/camerum/Desktop/Decision_Support_system/SsdWebApi/Models/"+dffile , usecols=['All_Bonds'], names=['All_Bonds'],header=0)
-       #Preprocessing: log transform
+   df.plot()  
+   #Preprocessing: log transform
    npa = df['All_Bonds'].to_numpy()
    logdata = np.log(npa)
    logdata=pd.Series(logdata)
@@ -43,7 +47,7 @@ if __name__ == "__main__":
    
    #another corelation more good
    import statsmodels.api as sm
-   sm.graphics.tsa.plot_acf(df, lags=110)
+   sm.graphics.tsa.plot_acf(df, lags=500)
    
    
 #Sarimax model  
