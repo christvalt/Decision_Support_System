@@ -52,7 +52,7 @@ if __name__ == "__main__":
    
 #Sarimax model  
 from statsmodels.tsa.statespace.sarimax import SARIMAX
-sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,2))
+sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,2), enforce_stationarity=False, enforce_invertibility=False)
 sfit = sarima_model.fit()
 print(sfit.summary())
 sfit.plot_diagnostics(figsize=(10, 6))
