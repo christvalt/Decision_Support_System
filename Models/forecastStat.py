@@ -38,7 +38,7 @@ if __name__ == "__main__":
    logdata = np.log(npa)
    logdata=pd.Series(logdata)
    difflog = logdata.diff()
-   difflog=difflog[1:]
+   difflog=difflog[0:]
    #plt.plot(df)
    #slpit dei dati
    cutpoint = int(0.9*len(difflog))
