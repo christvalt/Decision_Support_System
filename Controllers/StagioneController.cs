@@ -38,8 +38,8 @@ namespace SsdWebApi.Controllers {
   
            // var  numVal = Convert.ToInt32(attribute);
             //var  MathF=4;
-             var index =P.readIndex(id);
-             Console.WriteLine("test value" +index);
+             var index =P.readIndex(attribute);
+            // dopo : Console.WriteLine("test value" +index);
              return res;
         }
 
