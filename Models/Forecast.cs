@@ -12,7 +12,7 @@ namespace SsdWebApi
         public string forecastSARIMAindex(String attribute)
         {
             string res = "\"text\":\"";
-            string interpreter = @"C:/Users/camerum/anaconda3/envs/open/python.exe"; 
+            string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe"; 
             string environment = "open";
             int timeout = 10000;
             PythonRunner PR = new PythonRunner(interpreter,environment,timeout);
@@ -75,8 +75,10 @@ namespace SsdWebApi
 
             lend:
             return res;
-            Console.WriteLine("test"+res);
+            
     }
+    
 
     }
+    
 }
