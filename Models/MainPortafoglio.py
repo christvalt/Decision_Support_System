@@ -1,18 +1,21 @@
-import os, sys, io, base64
-import pmdarima as pm # pip install pmdarima
-import numpy as np
-import pandas as pd
+
+#import pmdarima as pm # pip install pmdarima
 from pandas.core.common import flatten
+import os, sys, io, base64
+import pandas as pd, matplotlib.pyplot as plt , numpy as np
+from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.seasonal import seasonal_decompose
 import PSO as ParSwarm
 import matplotlib.pyplot as plt
+
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-indices = ["FTSE_MIB", "All_Bonds", "esempio", "SP_500", "sta", "FTSE_MIB (2)", "esempio"]
+indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EURO", "All_Bonds", "SP_500", "SP_500"]
 
-result_forecasts = []
+valoriDiforcast = []
 
 def print_figure(fig):
 	"""
@@ -24,78 +27,64 @@ def print_figure(fig):
 	print(base64.b64encode(buf.getbuffer()))
 
 # Accuracy metrics
-def forecast_accuracy(forecast, actual):
-    mape = np.mean(np.abs(forecast - actual) / np.abs(actual))  # MAPE
-    me = np.mean(forecast - actual)  # ME
-    mae = np.mean(np.abs(forecast - actual))  # MAE
-    mpe = np.mean((forecast - actual) / actual)  # MPE
-    rmse = np.mean((forecast - actual) ** 2) ** .5  # RMSE
-    corr = np.corrcoef(forecast, actual)[0, 1]  # corr
-    mins = np.amin(np.hstack([forecast[:, None],
-                              actual[:, None]]), axis=1)
-    maxs = np.amax(np.hstack([forecast[:, None],
-                              actual[:, None]]), axis=1)
-    minmax = 1 - np.mean(mins / maxs)  # minmax
-    return ({'mape': mape, 'me': me, 'mae': mae,
-             'mpe': mpe, 'rmse': rmse,
-             'corr': corr, 'minmax': minmax})
-df = pd.read_csv("../All_Bonds.csv" , delimiter=',', decimal='.', names=['values'], header=0, error_bad_lines=False)
-  
-aValues = df['values'].to_numpy() # array of values data
-logdata = np.log(aValues) # log transform
+def forecast_accuracy(forecast_val, test):
 
-cutpoint = int(len(df) * 0.92)
-horizon_data_length = len(df) - cutpoint
-train = logdata[:cutpoint]
+    rmse = np.mean((forecast_val - test)**2)**.523 # RMSE
+    return({ 'rmse':rmse})
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-def forecast(index):
+def forecast(id):
     
-    df = pd.read_csv("../%s.csv" % index, delimiter=',', decimal='.', names=['values'], header=0, error_bad_lines=False)
+    df = pd.read_csv("../%s.csv" % id, sep=str, delimiter=',',names=['values'], header=0, error_bad_lines=False,warn_bad_lines=False,keep_default_na=True)
+  #preprocessing 
   
     aValues = df['values'].to_numpy() # array of values data
     logdata = np.log(aValues) # log transform
-
-    cutpoint = int(len(df) * 0.9)
+    #logdiff=logdata.diff()
+    cutpoint = int(len(df) * 0.91)
     horizon_data_length = len(df) - cutpoint
     train = logdata[:cutpoint]
     test = logdata[cutpoint:]
+    
+    ##Autocorrelazione more good
+    import statsmodels.api as sm
+    sm.graphics.tsa.plot_acf(df.values, lags=10)
+    plt.show
+   
   
-    model = pm.auto_arima(train, start_p=1, start_q=1,
-    test='adf', max_p=3, max_q=3,
-    d=1, trace=True,
-    error_action='ignore',
-    suppress_warnings=True,
-    stepwise=True) # False full grid
+    sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
+    sfit = sarima_model.fit()
+    print(sfit.summary())
+    sfit.plot_diagnostics(figsize=(10, 6))
+    #plt.show()
   
     # Predictions of y values based on "model", aka fitted values
-    ypred = model.predict_in_sample(start=1, end=len(train))
-    forecasts, confint = model.predict(n_periods=horizon_data_length, return_conf_int=True)
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+   
+    ypred=sfit.predict(start=0,end=len(train))
+    forewrap = sfit.get_forecast(steps=horizon_data_length)
+    #intervalo di forcast interessante
+    forecast_ci = forewrap.conf_int()
+    forecast_val = forewrap.predicted_mean
+    #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
-    metrics = forecast_accuracy(forecasts, np.array(list(flatten(df.values[-horizon_data_length - 1:-1]))))
-    print("MAPE {} = {:.2f}".format(index, metrics['mape']))
+    metrics = forecast_accuracy(forecast_val, test)
+   # print("RMSE is {}={:.2f} forecast{:.2f}".format(i ,metrics['rmse']))
 
     yfore = []
     for j in range(0, horizon_data_length):
-        print("Actual {} {} {:.2f} forecast {:.2f}".format(index, j, test[j], forecasts[j]))
-        yfore.append(forecasts[j])
+        #print("Actual {} {} {:.2f} forcast {:.2f}".format(i, j, test[j], forecast_val[j]))
+        yfore.append(forecast_val[j])
   
-    # make series for plotting purpose
-    fitted_series = pd.Series(forecasts, index=index_forecasts)
-    lower_series = pd.Series(confint[:, 0], index=index_forecasts)
-    upper_series = pd.Series(confint[:, 1], index=index_forecasts)
 
     # Plot
     plt.clf()
-    plt.plot(logdata, label='LogData')
-    plt.plot(ypred, color='brown', label='Predictions')
-    plt.plot(fitted_series, color='darkgreen', label='Forecast')
-    plt.fill_between(lower_series.index,
-                     lower_series,
-                     upper_series,
-                     color='k', alpha=.15)
-    plt.title("ARIMA forecast of {}".format(index))
-    plt.legend()
+    plt.plot(logdata)
+    plt.plot(ypred, color='red', label='prediction onsample')
+    plt.plot(yfore,linewidth=2, markersize=12)
+    plt.plot([None for i in ypred] + [x for x in yfore])
+    plt.title(" dati quindi  di forcat{}".format(id))
+    #plt.legend()
+    
   
     #plt.show()
     print_figure(plt.gcf())
@@ -103,23 +92,25 @@ def forecast(index):
     return yfore, horizon_data_length
 
 if len(sys.argv) == 2:
-    forecast(sys.argv[1])
+   # forecast(sys.argv[1])
+   print(sys.argv[1])
 else:
     for i in range(len(indices)):
         f, horizon_data_length = forecast(indices[i])
-        result_forecasts.append(f)
+        valoriDiforcast.append(f)
         
     portfolioInitialValue = 100000
     numvar = 7
     xmin = 0.05
     xmax = 0.7
     niter = 100
-    popsize = 50
-    nhood_size = 10
-        
+    popsize = 70
+    nhood_size = 7
+        #run optimizzation algorithm
     PSO = ParSwarm.ParSwarmOpt(xmin, xmax)
-    res = PSO.pso_solve(popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon_data_length, result_forecasts)
-
+    res = PSO.pso_solve(popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon_data_length, valoriDiforcast)
+    print("test value is".format(numvar,popsize))
+    #not run look it after  114-122
     print("Portfolio: ", end='')
     for value in res.xsolbest:
         print(value, end=' ')
@@ -127,5 +118,5 @@ else:
     print("Return: {}".format(res.return_valuebest))
     print("Devst: {}".format(res.devstbest))
    
-    print("dd",sys.argv[1])
+    #print("dd",sys.argv[1])
    

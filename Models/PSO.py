@@ -7,15 +7,15 @@ class Particle:
         self.fit = self.return_value = self.devst = self.fitnbest = self.fitbest = self.return_valuebest = self.devstbest = 0
         self.v = np.zeros(_ndim, dtype=np.float)
         self.x = np.zeros(_ndim, dtype=np.float)
-        self.xbest = np.zeros(_ndim, dtype=np.float)
-        self.nxbest = np.zeros(_ndim, dtype=np.float)
+        self.xbest = np.zeros(_ndim, dtype=np.float)#local best
+        self.nxbest = np.zeros(_ndim, dtype=np.float)#global best
         self.nset = np.zeros(nhood_size, dtype=np.int)
         
 class ParSwarmOpt:
     def __init__(self,_xmin,_xmax):
         #velocity coefficient 
         self.w = 0.25
-        self.c1 = 2.0
+        self.c1 = 1.7
         self.c2 = 2.0
         self.fitbest = np.inf
         self.return_valuebest = np.inf
@@ -23,25 +23,26 @@ class ParSwarmOpt:
         self.xmin = _xmin
         self.xmax = _xmax
         
-    def pso_solve(self, popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon, result_forecasts):
+    def pso_solve(self, popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon, valoriDiforcast):
         rnd.seed(550)
         self.xsolbest = np.zeros(numvar, dtype=np.float)
-        #genero la popolazione iniziale
+        #---------------inizialize popolazione 
         pop = []
         for i in range(popsize):
             p = Particle(numvar, nhood_size)
             pop.append(p)
             
         for i in range(popsize):
-            # init positions and velocities
-            pop[i].x = np.random.dirichlet(np.ones(numvar))
-            pop[i].v = [(rnd.random() - rnd.random()) * \
-                    0.5 * (self.xmax - self.xmin) - self.xmin] * numvar
-            pop[i].xbest = pop[i].x
-            pop[i].nxbest = pop[i].x
+            # initialize  positions and velocities
+            for j in range(numvar):
+                pop[i].x = np.random.dirichlet(np.ones(numvar))
+                pop[i].v = [(rnd.random() - rnd.random()) * \
+                        0.5 * (self.xmax - self.xmin) - self.xmin] * numvar
+                pop[i].xbest = pop[i].x
+                pop[i].nxbest = pop[i].x
                 
-            # init global and local fitness
-            pop[i].fit, pop[i].return_value, pop[i].devst = compute_fitness(pop[i].x, portfolioInitialValue, horizon, result_forecasts)
+            # initialize  global and local fitness
+            pop[i].fit, pop[i].return_value, pop[i].devst = compute_fitness(pop[i].x, portfolioInitialValue, horizon, valoriDiforcast)
             pop[i].fitbest = pop[i].fit
             pop[i].return_valuebest = pop[i].return_value
             pop[i].devstbest = pop[i].devst
@@ -53,10 +54,10 @@ class ParSwarmOpt:
                     id = rnd.randrange(popsize)
                 else:
                     pop[i].nset[j] = id;
-                    #repetto i ciclo niter volte
+        #-------------------------------------------run the code niter volte
         for iter in range(niter):
             print("iteration  {0} zub {1}".format(iter, self.fitbest))
-            # update every particle una per volta
+            # update all particle (una per volta)
             for i in range(popsize):
                 # for each dimension
                 for d in range(numvar):
@@ -92,7 +93,7 @@ class ParSwarmOpt:
                             pop[i].x[max_index] -= diff
                         
                 # update particle fitness
-                pop[i].fit, pop[i].return_value, pop[i].devst = compute_fitness(pop[i].x, portfolioInitialValue, horizon, result_forecasts)
+                pop[i].fit, pop[i].return_value, pop[i].devst = compute_fitness(pop[i].x, portfolioInitialValue, horizon, valoriDiforcast)
                 
                 #update personal best position, min
                 if (pop[i].fit < pop[i].fitbest):
@@ -120,5 +121,5 @@ class ParSwarmOpt:
                     # copy particle pos to gbest vector
                     for j in range(numvar):
                         self.xsolbest[j] = pop[i].x[j]
-                        
-        return self
+                     
+        return self;

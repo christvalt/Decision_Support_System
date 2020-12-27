@@ -1,7 +1,7 @@
 import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 import os, sys, io, base64
-#import PSO as ParSwarm
+import PSO as ParSwarm
 
 indices = ["FTSE_MIB", "All_Bonds", "esempio", "SP_500", "sta", "FTSE_MIB (2)", "esempio"]
 result_forecasts = []
@@ -60,7 +60,7 @@ def forcast(id):
        cutpoint = int(0.91*len(difflog))
        train = difflog[:cutpoint]
        test = difflog[cutpoint:]
-       orizonte = len(df) - cutpoint
+       orizonte_temporale = len(difflog) - cutpoint
     
     #Sarimax model  
        from statsmodels.tsa.statespace.sarimax import SARIMAX
@@ -79,7 +79,7 @@ def forcast(id):
        #plt.title("trian")
         
        #previsione de dati quindi il forcat --->il modelo è stato esteso al futuro
-       forewrap = sfit.get_forecast(steps=orizonte)
+       forewrap = sfit.get_forecast(steps=orizonte_temporale)
        forecast_ci = forewrap.conf_int()
        forecast_val = forewrap.predicted_mean
        #forecast_val=forecast_val[1:]
@@ -98,8 +98,16 @@ def forcast(id):
        #plt.plot(df)
        #plt.plot(reconstruct)
        #plt.plot([None for x in expdata]+[x for x in expfore])
-x = forcast(id)
-print("Result of add function is {}".format(x))
+       
+       valutation=forecast_accuracy(forecast_val, test)
+       print("rmse is {}:" +valutation)
+       yfore = []
+       for j in range(0, orizonte_temporale):
+        print("Actual {} {} {:.2f} forecast {:.2f}".format(id, j, test[j], forecast_val[j]))
+        yfore.append(forecast_val[j])
+        plt.plot(difflog)
+        print_figure(plt.gcf())
+        return yfore, orizonte_temporale
 
 # Accuracy metrics
 def forecast_accuracy(forcast, test):
@@ -115,10 +123,10 @@ plt.show
 
 #plt.show
 
-plt.show()
+#plt.show()
    
    # Finally, print the chart as base64 string to the console.
-print_figure(plt.gcf())
+#print_figure(plt.gcf())
 
 
 
