@@ -103,14 +103,14 @@ else:
     numvar = 7
     xmin = 0.05
     xmax = 0.7
-    niter = 100
+    niter = 2
     popsize = 70
     nhood_size = 7
         #run optimizzation algorithm
     PSO = ParSwarm.ParSwarmOpt(xmin, xmax)
     res = PSO.pso_solve(popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon_data_length, valoriDiforcast)
     print("test value is".format(numvar,popsize))
-    #not run look it after  114-122
+    #print portafoglio value %
     print("Portfolio: ", end='')
     for value in res.xsolbest:
         print(value, end=' ')

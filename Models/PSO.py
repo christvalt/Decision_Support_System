@@ -121,5 +121,7 @@ class ParSwarmOpt:
                     # copy particle pos to gbest vector
                     for j in range(numvar):
                         self.xsolbest[j] = pop[i].x[j]
+                        print("xsolbest"+ j +str(self.xsolbest[j]))
+                        
                      
         return self;
