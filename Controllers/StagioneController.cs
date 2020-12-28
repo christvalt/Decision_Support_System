@@ -18,29 +18,21 @@ namespace SsdWebApi.Controllers {
 
         [HttpGet]
         //public ActionResult<List<Indici>> GetAll () =>_context.indici.ToList ();
-               public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
+         public ActionResult<List<Indici>> GetAll () => _context.indici.ToList ();
          
         // GET by ID action
-        [HttpGet ("{id}", Name="GetSerie")]
-          public  String GetSerie (string attribute) {
+        [HttpGet ("{attribute}", Name="GetSerie")]
+           public string GetSerie(string attribute)
+        {
+            string res = "{";
+            Forecast F = new Forecast();
+            res += F.forecastSARIMAindex(attribute);
+            res += "}";
 
-            string res ="{";
-             //if(id>8) id=8;
-             //string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
-             //string attribute =indices[id];
-            // Console.WriteLine(indices);
+            Console.WriteLine(res);
 
-
-
-             Forecast  F = new Forecast();
-             res+=F.forecastSARIMAindex(attribute);
-             res+="}";
-  
-           // var  numVal = Convert.ToInt32(attribute);
-            //var  MathF=4;
-             var index =P.readIndex(attribute);
-            // dopo : Console.WriteLine("test value" +index);
-             return res;
+            //var index = P.readIndex(attribute);
+            return res;
         }
 
        /*

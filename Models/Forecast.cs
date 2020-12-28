@@ -1,100 +1,77 @@
 using System;
 using System.Drawing;
-/*lavorare sugli oggetti, sull'istanza di questa classe qui*/
+using System.Linq;
+
 namespace SsdWebApi
 {
-
     public class Forecast
     {
-        public Forecast(){
+        public Forecast()
+        {
 
         }
-        public string forecastSARIMAindex(String attribute)
+
+        public string forecastSARIMAindex(string attribute)
         {
             string res = "\"text\":\"";
             string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe"; 
             string environment = "open";
             int timeout = 10000;
-            PythonRunner PR = new PythonRunner(interpreter,environment,timeout);
+            PythonRunner pr = new PythonRunner(interpreter, environment, timeout);
             Bitmap bmp = null;
-
+            
             try
             {
                 string command = $"Models/MainPortafoglio.py ";
-                string[] indice = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
-                command = command + " " + attribute;
+                string[] indices = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
                 
-                string list = PR.runDosCommands(command);
+                if (indices.Contains(attribute)) {
+                    command = command + " " + attribute;
+                }
+                string list = pr.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
                     Console.WriteLine("Error in the script call");
-                    goto lend;
+                    return res;
                 }
+
                 string[] lines = list.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                string strBitmap = "";
+                string strBitmaps = "[";
                 foreach (string s in lines)
                 {
-                    if (s.StartsWith("MAPE"))
+                    if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
                     {
                         Console.WriteLine(s);
-                        res += s;
-                    }
-                    if (s.StartsWith("Actual"))
-                    {
-                        Console.WriteLine(s);
-                        res += s;
-                    }
-                     if (s.StartsWith("Return"))
-                    {
-                        Console.WriteLine(s);
-                        res += s;
-                    }
-                     if (s.StartsWith("Devst"))
-                    {
-                        Console.WriteLine(s);
-                        res += s;
-                    }
-                     if (s.StartsWith("Portfolio"))
-                    {
-                        Console.WriteLine(s);
-                        res += s;
+                        res += (s+"\\n");
                     }
 
                     if (s.StartsWith("b'"))
                     {
-                        strBitmap = s.Trim();
-                        break;
+                        strBitmaps += "\""+ s.Trim().Substring(s.IndexOf("b'"))+"\",";
+                        try
+                        {
+                            bmp = pr.FromPythonBase64String(s.Trim().Substring(s.IndexOf("b'")));
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Error while creating image from Python script", e);
+                        }
                     }
                 }
-                strBitmap=strBitmap.Substring(strBitmap.IndexOf("b'")); //begin of binary image
-                res+= "\",\"img\":\""+strBitmap+"\"";
-                try{
-                    bmp=PR.FromPythonBase64String(strBitmap);
-                }
-                catch(Exception exception)
-                {
-                    throw new Exception(
-                        "An error occuccurred while trying to create an image from Python script output. " +
-                        "See inner exception for details.",
-                        exception);
-                    
-                }
-                goto lend;
+				strBitmaps = strBitmaps.TrimEnd(',');
+				strBitmaps += "]";
 
+                //strBitmap = strBitmap.Substring(strBitmap.IndexOf("b'")); // begin of binary image
+                // strBitmap = strBitmap.Remove(strBitmap.Length-4).Trim(); // remove "exit" at the end
+                res += "\",\"img\":"+strBitmaps;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                goto lend;
             }
 
-            lend:
             return res;
-            
+        } 
     }
-    
-
-    }
-    
 }
