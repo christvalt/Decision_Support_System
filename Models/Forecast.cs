@@ -41,7 +41,7 @@ namespace SsdWebApi
                 string strBitmaps = "[";
                 foreach (string s in lines)
                 {
-                    if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
+                    if (s.StartsWith("rmse") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
                     {
                         Console.WriteLine(s);
                         res += (s+"\\n");

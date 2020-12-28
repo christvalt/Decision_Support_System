@@ -105,7 +105,7 @@ function getIndexById() {
       document.getElementById("indexButton").disabled = true;
       var id = document.getElementById("indices").value;
       $.ajax({
-        url: "https://localhost:5001/api/indice/" + id,
+        url: "https://localhost:5001/api/Indici/" + id,
         type: "GET",
         contentType: "application/json",
         data: "",
