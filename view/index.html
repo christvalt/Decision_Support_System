@@ -13,7 +13,7 @@ Esempio:
      import { findById } from './client.js';
      import { updateId } from './client.js';
      import { deleteId } from './client.js';
-     import { getIndexById } from './client.js';
+     import { SelectSerie } from './client.js';
     </script>
 </head>
 
@@ -33,28 +33,8 @@ Esempio:
         Anno: <input type="number" id="txtNewAnno" size="10" value=1492>
     </div>
     <div>
-        <input type="button" value=" select serie" onclick="getIndexById();" />
+        <input type="button" value=" select serie" onclick="SelectSerie();" />
     </div>
-
-    <div>
-        <textarea id="txtarea" rows="8" cols="50"> </textarea>
-    </div>
-<label for="indices">Index:</label>
-<select name="indices" id="indices">
-      <option value="complete">Full portfolio</option>
-      <option value="SP_500">SP_500</option>
-      <option value="FTSE_MIB">FTSE_MIB</option>
-      <option value="GOLD_SPOT">GOLD_SPOT</option>
-      <option value="MSCI_EM">MSCI_EM</option>
-      <option value="MSCI_EURO">MSCI_EURO</option>
-      <option value="All_Bonds">All_Bonds</option>
-      <option value="US_Treasury">US_Treasury</option>
-</select>
-    <div>
-    <input id="indexButton" type="button" value="Forecast" onclick="getIndexById();" />
-    </div>
-    <div id="charts">
-
 </body>
 
 </html>

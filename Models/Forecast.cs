@@ -1,77 +1,84 @@
 using System;
 using System.Drawing;
-using System.Linq;
-
+/*lavorare sugli oggetti, sull'istanza di questa classe qui*/
 namespace SsdWebApi
 {
+
     public class Forecast
     {
-        public Forecast()
-        {
+        public Forecast(){
 
         }
-
-        public string forecastARIMAindex(string attribute)
+        public string forecastSARIMAindex(String attribute)
         {
             string res = "\"text\":\"";
-            string interpreter = @"C:\Users\snorb\Anaconda3\envs\open\python.exe";
+            string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe"; 
             string environment = "open";
             int timeout = 10000;
-            PythonRunner pr = new PythonRunner(interpreter, environment, timeout);
+            PythonRunner PR = new PythonRunner(interpreter,environment,timeout);
             Bitmap bmp = null;
-            
+
             try
             {
-                string command = $"Models/MainPortafoglio.py";
-                string[] indices = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
-                
-                if (indices.Contains(attribute)) {
-                    command = command + " " + attribute;
-                }
-                string list = pr.runDosCommands(command);
+                string command = $"Models/forecastStat.py {attribute}.csv";
+                string list = PR.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
                     Console.WriteLine("Error in the script call");
-                    return res;
+                    goto lend;
                 }
-
                 string[] lines = list.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                string strBitmaps = "[";
+                string strBitmap = "";
                 foreach (string s in lines)
                 {
-                    if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
+                    if (s.StartsWith("MAPE"))
                     {
                         Console.WriteLine(s);
-                        res += (s+"\\n");
+                        res += s;
                     }
 
                     if (s.StartsWith("b'"))
                     {
-                        strBitmaps += "\""+ s.Trim().Substring(s.IndexOf("b'"))+"\",";
-                        try
-                        {
-                            bmp = pr.FromPythonBase64String(s.Trim().Substring(s.IndexOf("b'")));
-                        }
-                        catch (Exception e)
-                        {
-                            throw new Exception("Error while creating image from Python script", e);
-                        }
+                        strBitmap = s.Trim();
+                        break;
                     }
-                }
-				strBitmaps = strBitmaps.TrimEnd(',');
-				strBitmaps += "]";
+                    if (s.StartsWith("Actual"))
+                    {
+                        double fcast = Convert.ToDouble(s.Substring(s.LastIndexOf(" ")));
+                        Console.WriteLine(fcast);
+                    }
 
-                //strBitmap = strBitmap.Substring(strBitmap.IndexOf("b'")); // begin of binary image
-                // strBitmap = strBitmap.Remove(strBitmap.Length-4).Trim(); // remove "exit" at the end
-                res += "\",\"img\":"+strBitmaps;
+
+                }
+                strBitmap=strBitmap.Substring(strBitmap.IndexOf("b'")); //begin of binary image
+                res+= "\",\"img\":\""+strBitmap+"\"";
+                try{
+                    bmp=PR.FromPythonBase64String(strBitmap);
+                }
+                catch(Exception exception)
+                {
+                    throw new Exception(
+                        "An error occuccurred while trying to create an image from Python script output. " +
+                        "See inner exception for details.",
+                        exception);
+                    
+                }
+                goto lend;
+
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine(e.ToString());
+                goto lend;
             }
 
+            lend:
             return res;
-        } 
+            
     }
+    
+
+    }
+    
 }
