@@ -68,7 +68,7 @@ def forecast(id):
     #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
     metrics = forecast_accuracy(forecast_val, test)
-    print("RMSE is ".format(metrics['rmse']))
+    print("RMSE is ".format(metrics))
 
     yfore = []
     for j in range(0, horizon_data_length):
