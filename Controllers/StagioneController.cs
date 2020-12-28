@@ -29,9 +29,6 @@ namespace SsdWebApi.Controllers {
              string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
              string attribute =indices[id];
             // Console.WriteLine(indices);
-
-
-
              Forecast  F = new Forecast();
              res+=F.forecastARIMAindex(attribute);
              res+="}";
