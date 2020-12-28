@@ -101,31 +101,30 @@ function deleteId() {
     $.ajax(options);
     };
 
-function getIndexById() {
-	//document.getElementById("indexButton").disabled = true;
-  var id = $('#txtId').val();
-	$.ajax({
-		url: "https://localhost:5001/api/indice/" + id,
-		type: "GET",
-		contentType: "application/json",
-		data: "",
-		success: function(result) {
-			showResult(JSON.parse(result));
-		},
-		error: function(xhr, status, p3, p4) {
-			var err = "Error " +" "+ status + " " + p3;
-			if (xhr.responseText && xhr.responseText[0] == "{") {
-				err = JSON.parse(xhr.responseText).message;
-			}
-			alert(err);
-		}
-	});
-}
-
+    function getIndexById() {
+      document.getElementById("indexButton").disabled = true;
+      var id = document.getElementById("indices").value;
+      $.ajax({
+        url: "https://localhost:5001/api/indice/" + id,
+        type: "GET",
+        contentType: "application/json",
+        data: "",
+        success: function(result) {
+          showResult(JSON.parse(result));
+        },
+        error: function(xhr, status, p3, p4) {
+          var err = "Error " + status + " " + p3;
+          if (xhr.responseText && xhr.responseText[0] == "{") {
+            err = JSON.parse(xhr.responseText).message;
+          }
+          alert(err);
+        }
+      });
+    }
 function showResult(res) {
 	document.getElementById('txtarea').value += res.text;
 	renderImage(res.img);
-	//document.getElementById("indexButton").disabled = false;
+	document.getElementById("indexButton").disabled = false;
 }
 
 function renderImage(images) {
@@ -136,7 +135,7 @@ function renderImage(images) {
 		var image = new Image();
 		//image.style = "width: 100%";
 		image.src = 'data:image/png;base64,' + baseStr64;
-		document.body.appendChild(image);
+		document.getElementById("charts").appendChild(image);
 	});
 }
   

@@ -22,12 +22,12 @@ namespace SsdWebApi.Controllers {
          
         // GET by ID action
         [HttpGet ("{id}", Name="GetSerie")]
-          public  String GetSerie (int id) {
+          public  String GetSerie (string attribute) {
 
             string res ="{";
-             if(id>8) id=8;
-             string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
-             string attribute =indices[id];
+             //if(id>8) id=8;
+             //string[] indices = new string []{"id","Data","FTSE_MIB","GOLD_SPOT","MSCI_EM","MSCI_EURO","All_Bonds","US_TReasury"};
+             //string attribute =indices[id];
             // Console.WriteLine(indices);
 
 
