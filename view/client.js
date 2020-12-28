@@ -101,42 +101,42 @@ function deleteId() {
     $.ajax(options);
     };
 
-    function SelectSerie() {
-      var id = $('#txtId').val();
-      $.ajax({
-        url: "https://localhost:5001/api/Indici/" + id,
-        type: "GET",
-        contentType: "application/json",
-        data: "",
-        success: function (result) {
-          console.log(result);
-          showResult(JSON.parse(result));
-          //readResult(JSON.stringify(result));
-        },
-        error: function (xhr, status, p3, p4) {
-          var err = "Error " + " " + status + " " + p3;
-          if (xhr.responseText && xhr.responseText[0] == "{")
-            err = JSON.parse(xhr.responseText).message;
-          alert(err);
-        },
-      });
-     
-   };
+function getIndexById() {
+	document.getElementById("indexButton").disabled = true;
+	var id = document.getElementById("indices").value;
+	$.ajax({
+		url: "https://localhost:5001/api/indice/" + id,
+		type: "GET",
+		contentType: "application/json",
+		data: "",
+		success: function(result) {
+			showResult(JSON.parse(result));
+		},
+		error: function(xhr, status, p3, p4) {
+			var err = "Error " + status + " " + p3;
+			if (xhr.responseText && xhr.responseText[0] == "{") {
+				err = JSON.parse(xhr.responseText).message;
+			}
+			alert(err);
+		}
+	});
+}
 
-   function showResult(res) {
-     document.getElementById('textarea').value +=res.text;
-     renderImage(res.img);
-     
-   }
+function showResult(res) {
+	document.getElementById('txtarea').value += res.text;
+	renderImage(res.img);
+	document.getElementById("indexButton").disabled = false;
+}
 
-   function renderImage(base64Imagestring) {
-
-     var basestr64=base64Imagestring;
-     basestr64=basestr64-substring(0,basestr64.lenght-1);
-     basestr64=basestr64-substring(2,basestr64.lenght);
-     var image =new Image();
-     image.src ="data:image/png;base64,"+ basestr64;
-     document.body .appendChild(image);
-
-   }
+function renderImage(images) {
+	images.forEach(base64ImageString => {
+		var baseStr64 = base64ImageString;
+		baseStr64 = baseStr64.substring(0, baseStr64.length - 1);
+		baseStr64 = baseStr64.substring(2, baseStr64.length);
+		var image = new Image();
+		image.style = "width: 100%";
+		image.src = 'data:image/png;base64,' + baseStr64;
+		document.getElementById("charts").appendChild(image);
+	});
+}
   

@@ -33,7 +33,7 @@ namespace SsdWebApi.Controllers {
 
 
              Forecast  F = new Forecast();
-             res+=F.forecastSARIMAindex(attribute);
+             res+=F.forecastARIMAindex(attribute);
              res+="}";
   
            // var  numVal = Convert.ToInt32(attribute);
