@@ -46,7 +46,7 @@ namespace SsdWebApi
                         res += (s+"\\n");
                     }
 
-                    if (s.StartsWith("b'"))
+                   if (s.StartsWith("b'"))
                     {
                         strBitmaps += "\""+ s.Trim().Substring(s.IndexOf("b'"))+"\",";
                         try
