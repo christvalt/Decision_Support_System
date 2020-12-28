@@ -101,7 +101,7 @@ function deleteId() {
     $.ajax(options);
     };
 
-    function getIndexById() {
+function getIndexById() {
       document.getElementById("indexButton").disabled = true;
       var id = document.getElementById("indices").value;
       $.ajax({
@@ -120,7 +120,7 @@ function deleteId() {
           alert(err);
         }
       });
-    }
+}
 function showResult(res) {
 	document.getElementById('txtarea').value += res.text;
 	renderImage(res.img);
@@ -133,7 +133,7 @@ function renderImage(images) {
 		baseStr64 = baseStr64.substring(0, baseStr64.length - 1);
 		baseStr64 = baseStr64.substring(2, baseStr64.length);
 		var image = new Image();
-		//image.style = "width: 100%";
+		image.style = "width: 100%";
 		image.src = 'data:image/png;base64,' + baseStr64;
 		document.getElementById("charts").appendChild(image);
 	});

@@ -13,15 +13,16 @@ Esempio:
      import { findById } from './client.js';
      import { updateId } from './client.js';
      import { deleteId } from './client.js';
-     import { getIndexById } from './client.js';
+     //import { getIndexById } from './client.js';
     </script>
 </head>
 
 <body onload="init()">
     <h1>SsdWebApi client</h1>
-    <div>
-        <textarea id="txtarea" rows="8" cols="50"> </textarea>
-    </div>
+<div>
+<textarea id="txtarea" rows="8" cols="50" readonly> </textarea>
+</div>
+
 <label for="indices">Index:</label>
 <select name="indices" id="indices">
   <option value="complete">Full portfolio</option>
@@ -35,6 +36,8 @@ Esempio:
 </select>
 <div>
 <input id="indexButton" type="button" value="Forecast" onclick="getIndexById();" />
+</div>
+<div id="charts">
 </div>
 </body>
 

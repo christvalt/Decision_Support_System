@@ -1,4 +1,4 @@
-import os, numpy as np, pandas as pd, json, math
+import os, numpy as np, pandas as pd, math
 import PSO as ParSwarm
     
 def compute_fitness(xvec, portfolioInitialValue, horizon, valoriDiforcast):
