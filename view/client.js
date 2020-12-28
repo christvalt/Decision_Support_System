@@ -102,8 +102,8 @@ function deleteId() {
     };
 
 function getIndexById() {
-	document.getElementById("indexButton").disabled = true;
-	var id = document.getElementById("indices").value;
+	//document.getElementById("indexButton").disabled = true;
+  var id = $('#txtId').val();
 	$.ajax({
 		url: "https://localhost:5001/api/indice/" + id,
 		type: "GET",
@@ -113,7 +113,7 @@ function getIndexById() {
 			showResult(JSON.parse(result));
 		},
 		error: function(xhr, status, p3, p4) {
-			var err = "Error " + status + " " + p3;
+			var err = "Error " +" "+ status + " " + p3;
 			if (xhr.responseText && xhr.responseText[0] == "{") {
 				err = JSON.parse(xhr.responseText).message;
 			}
@@ -125,7 +125,7 @@ function getIndexById() {
 function showResult(res) {
 	document.getElementById('txtarea').value += res.text;
 	renderImage(res.img);
-	document.getElementById("indexButton").disabled = false;
+	//document.getElementById("indexButton").disabled = false;
 }
 
 function renderImage(images) {
@@ -134,9 +134,9 @@ function renderImage(images) {
 		baseStr64 = baseStr64.substring(0, baseStr64.length - 1);
 		baseStr64 = baseStr64.substring(2, baseStr64.length);
 		var image = new Image();
-		image.style = "width: 100%";
+		//image.style = "width: 100%";
 		image.src = 'data:image/png;base64,' + baseStr64;
-		document.getElementById("charts").appendChild(image);
+		document.body.appendChild(image);
 	});
 }
   
