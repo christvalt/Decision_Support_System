@@ -20,7 +20,10 @@ namespace SsdWebApi
 
             try
             {
-                string command = $"Models/forecastStat.py {attribute}.csv";
+                string command = $"Models/MainPortafoglio.py ";
+                string[] indice = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
+                command = command + " " + attribute;
+                
                 string list = PR.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
@@ -37,19 +40,32 @@ namespace SsdWebApi
                         Console.WriteLine(s);
                         res += s;
                     }
+                    if (s.StartsWith("Actual"))
+                    {
+                        Console.WriteLine(s);
+                        res += s;
+                    }
+                     if (s.StartsWith("Return"))
+                    {
+                        Console.WriteLine(s);
+                        res += s;
+                    }
+                     if (s.StartsWith("Devst"))
+                    {
+                        Console.WriteLine(s);
+                        res += s;
+                    }
+                     if (s.StartsWith("Portfolio"))
+                    {
+                        Console.WriteLine(s);
+                        res += s;
+                    }
 
                     if (s.StartsWith("b'"))
                     {
                         strBitmap = s.Trim();
                         break;
                     }
-                    if (s.StartsWith("Actual"))
-                    {
-                        double fcast = Convert.ToDouble(s.Substring(s.LastIndexOf(" ")));
-                        Console.WriteLine(fcast);
-                    }
-
-
                 }
                 strBitmap=strBitmap.Substring(strBitmap.IndexOf("b'")); //begin of binary image
                 res+= "\",\"img\":\""+strBitmap+"\"";
