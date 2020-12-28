@@ -103,7 +103,7 @@ else:
     numvar = 5
     xmin = 0.05
     xmax = 0.7
-    niter = 12
+    niter = 2
     popsize = 70
     nhood_size = 7
         #run optimizzation algorithm

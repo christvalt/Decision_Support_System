@@ -29,6 +29,7 @@ namespace SsdWebApi
                     command = command + " " + attribute;
                 }
                 string list = pr.runDosCommands(command);
+                Console.WriteLine("result"+list);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
