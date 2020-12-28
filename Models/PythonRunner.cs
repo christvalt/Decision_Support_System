@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 
-
 public class PythonRunner
 {
 		// strings collecting output/error messages, in case
@@ -46,8 +45,9 @@ public class PythonRunner
          {
             // Separated FileName and Arguments
             FileName = "cmd.exe",
-            Arguments = $"/c C:/Users/camerum/anaconda3/condabin/conda.bat activate {Environment}&&python {strCommand}",
-            UseShellExecute = false, 
+             Arguments = $"/c C:/Users/camerum/anaconda3/condabin/conda.bat activate {Environment}&&python {strCommand}",
+             //Arguments = $"/c c:/ProgramData/Anaconda3/condabin/conda.bat activate {Environment}&&python {strCommand}",
+             UseShellExecute = false, 
             CreateNoWindow = false,
             ErrorDialog = false,
             RedirectStandardError = true,
