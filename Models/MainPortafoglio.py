@@ -1,6 +1,6 @@
 
 #import pmdarima as pm # pip install pmdarima
-from pandas.core.common import flatten
+#from pandas.core.common import flatten
 import os, sys, io, base64
 import pandas as pd, matplotlib.pyplot as plt , numpy as np
 from statsmodels.tsa.arima_model import ARIMA
@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EURO", "All_Bonds", "SP_500", "SP_500"]
+indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
 
 valoriDiforcast = []
 
