@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO","All_Bonds", "US_Treasury"]
+indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO","All_Bonds","All_Bonds"]
 
 valoriDiforcast = []
 
@@ -68,7 +68,7 @@ def forecast(id):
     #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
     metrics = forecast_accuracy(forecast_val, test)
-    print("RMSE is {}={:.2f} forecast{:.2f}".format(i ,metrics['rmse']))
+    print("RMSE is ".format(metrics['rmse']))
 
     yfore = []
     for j in range(0, horizon_data_length):
@@ -100,7 +100,7 @@ else:
         valoriDiforcast.append(f)
         
     portfolioInitialValue = 100000
-    numvar = 7
+    numvar = 6
     xmin = 0.05
     xmax = 0.7
     niter = 2
