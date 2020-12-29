@@ -30,6 +30,7 @@ namespace SsdWebApi
                 }
                 string list = pr.runDosCommands(command);
                 Console.WriteLine("result"+list);
+                 Console.WriteLine("++++++++result of command is++++++++"+command);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
@@ -71,8 +72,11 @@ namespace SsdWebApi
             {
                 Console.WriteLine(e.ToString());
             }
+            Console.WriteLine("simple tes is:"+res);
 
             return res;
+
+            
         } 
     }
 }
