@@ -45,6 +45,7 @@ def forecast(id):
     horizon_data_length = len(df) - cutpoint
     train = logdata[:cutpoint]
     test = logdata[cutpoint:]
+    test=test[1:]
     
     ##Autocorrelazione more good
     import statsmodels.api as sm
