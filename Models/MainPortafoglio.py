@@ -29,8 +29,8 @@ def print_figure(fig):
 # Accuracy metrics
 def forecast_accuracy(forecast_val, test):
 
-    rmse = np.mean((forecast_val - test)**2)**.523 # RMSE
-    return({ 'rmse':rmse})
+    mape = np.mean(np.abs(forecast_val - test) / np.abs(test))  # RMSE
+    return({ 'mape':mape})
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 def forecast(id):
@@ -66,15 +66,16 @@ def forecast(id):
     #intervalo di forcast interessante
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
+    forecast_val=forecast_val[1:]
     #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
     metrics = forecast_accuracy(forecast_val, test)
-    print("RMSE is "+id,metrics)
+    print("RMSE is "+id,metrics['mape'])
 
     yfore = []
     for j in range(0, horizon_data_length):
         #print("Actual {} {} {:.2f} forcast {:.2f}".format(i, j, test[j], forecast_val[j]))
-        yfore.append(forecast_val[j])
+        yfore.append(forecast_val[j-1])
   
 
     # Plot
