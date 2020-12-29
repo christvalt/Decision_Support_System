@@ -29,8 +29,8 @@ def print_figure(fig):
 # Accuracy metrics
 def forecast_accuracy(forecast_val, test):
 
-    mape = np.mean(np.abs(forecast_val - test) / np.abs(test))  # RMSE
-    return({ 'mape':mape})
+    rmse = np.mean((forecast_val - test) ** 2) ** .0  # RMSE
+    return({ 'rmse':rmse})
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 def forecast(id):
@@ -70,11 +70,11 @@ def forecast(id):
     #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
     metrics = forecast_accuracy(forecast_val, test)
-    print("RMSE is "+id,metrics['mape'])
+    print("RMSE is "+id,metrics['rmse'])
 
     yfore = []
     for j in range(0, horizon_data_length):
-        #print("Actual {} {} {:.2f} forcast {:.2f}".format(i, j, test[j], forecast_val[j]))
+        print("Actual {}  {:.2f} forcast {:.2f}".format(id, j, forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
   
 
@@ -84,8 +84,8 @@ def forecast(id):
     plt.plot(ypred, color='red', label='prediction onsample')
     plt.plot(yfore,linewidth=2, markersize=12)
     plt.plot([None for i in ypred] + [x for x in yfore])
-    plt.title(" dati quindi  di forcat{}".format(id))
-    #plt.legend()
+    plt.title(" forcast {}".format(id))
+    #plt.title(label)
     
   
     #plt.show()
@@ -94,8 +94,8 @@ def forecast(id):
     return yfore, horizon_data_length
 
 if len(sys.argv) == 2:
-   # forecast(sys.argv[1])
-   print(sys.argv[1])
+    forecast(sys.argv[1])
+  # print(sys.argv[1])
 else:
     for i in range(len(indices)):
         f, horizon_data_length = forecast(indices[i])
