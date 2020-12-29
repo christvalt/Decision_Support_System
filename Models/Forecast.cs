@@ -14,7 +14,7 @@ namespace SsdWebApi
         public string forecastSARIMAindex(string attribute)
         {
             string res = "\"text\":\"";
-            string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe"; 
+            string interpreter = "C:/Users/camerum/anaconda3/envs/open/python.exe";
             string environment = "open";
             int timeout = 10000;
             PythonRunner pr = new PythonRunner(interpreter, environment, timeout);
@@ -22,33 +22,33 @@ namespace SsdWebApi
             
             try
             {
-                string command = $"Models/MainPortafoglio.py ";
+                string command = $"Models/MainPortafoglio.py";
                 string[] indices = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
                 
                 if (indices.Contains(attribute)) {
                     command = command + " " + attribute;
                 }
                 string list = pr.runDosCommands(command);
-                Console.WriteLine("result"+list);
-                 Console.WriteLine("++++++++result of command is++++++++"+command);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
                     Console.WriteLine("Error in the script call");
+                    Console.WriteLine("Error in "+res);
                     return res;
+                    
                 }
 
                 string[] lines = list.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 string strBitmaps = "[";
                 foreach (string s in lines)
                 {
-                    if (s.StartsWith("rmse") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
+                    if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
                     {
                         Console.WriteLine(s);
                         res += (s+"\\n");
                     }
 
-                   if (s.StartsWith("b'"))
+                    if (s.StartsWith("b'"))
                     {
                         strBitmaps += "\""+ s.Trim().Substring(s.IndexOf("b'"))+"\",";
                         try
@@ -72,11 +72,8 @@ namespace SsdWebApi
             {
                 Console.WriteLine(e.ToString());
             }
-            Console.WriteLine("simple tes is:"+res);
 
             return res;
-
-            
         } 
     }
 }
