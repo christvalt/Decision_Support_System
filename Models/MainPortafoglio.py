@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO","All_Bonds","All_Bonds"]
+indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO"]
 
 valoriDiforcast = []
 
@@ -100,7 +100,7 @@ else:
         valoriDiforcast.append(f)
         
     portfolioInitialValue = 100000
-    numvar = 6
+    numvar = 5
     xmin = 0.05
     xmax = 0.7
     niter = 2

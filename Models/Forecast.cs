@@ -20,6 +20,7 @@ namespace SsdWebApi
             PythonRunner pr = new PythonRunner(interpreter, environment, timeout);
             Bitmap bmp = null;
             
+            
             try
             {
                 string command = $"Models/MainPortafoglio.py";
@@ -28,24 +29,27 @@ namespace SsdWebApi
                 if (indices.Contains(attribute)) {
                     command = command + " " + attribute;
                 }
+                
                 string list = pr.runDosCommands(command);
+                Console.WriteLine("result list is "+list);
 
                 if (string.IsNullOrWhiteSpace(list))
                 {
                     Console.WriteLine("Error in the script call");
-                    Console.WriteLine("Error in "+res);
                     return res;
-                    
                 }
 
                 string[] lines = list.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                 Console.WriteLine("lines  is "+lines);
                 string strBitmaps = "[";
                 foreach (string s in lines)
                 {
+                      Console.WriteLine("s is "+s);
                     if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
                     {
                         Console.WriteLine(s);
                         res += (s+"\\n");
+                         Console.WriteLine("first string "+res);
                     }
 
                     if (s.StartsWith("b'"))

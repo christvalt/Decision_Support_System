@@ -100,7 +100,7 @@ public class PythonRunner
             process.WaitForExit();
          }
          // here no more process
-          Console.WriteLine("python runner result"+res);
+         // Console.WriteLine("python runner result"+res);
          return res;
       }    
 
