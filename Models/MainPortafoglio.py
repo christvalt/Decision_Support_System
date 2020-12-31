@@ -1,7 +1,7 @@
 
 #import pmdarima as pm # pip install pmdarima
 #from pandas.core.common import flatten
-import os, sys, io, base64
+import os, sys, io, base64,math
 import pandas as pd, matplotlib.pyplot as plt , numpy as np
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -74,7 +74,7 @@ def forecast(id):
 
     yfore = []
     for j in range(0, horizon_data_length):
-        print("Actual {0} {1} {2} forcast ".format(id, j, forecast_val[j-1]))
+        print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
   
 
@@ -84,7 +84,10 @@ def forecast(id):
     plt.plot(ypred, color='red', label='prediction onsample')
     plt.plot(yfore,linewidth=2, markersize=12)
     plt.plot([None for i in ypred] + [x for x in yfore])
+    plt.plot(np.concatenate((np.full(npast,np.nan),ypred[:,0])))
+    plt.plot(np.concatenate((np.full(len(train)+npast,np.nan), yfore[:,0])))
     plt.title(" forcast {}".format(id))
+    plt.legend()
     #plt.title(label)
     
   
