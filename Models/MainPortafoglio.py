@@ -38,8 +38,8 @@ def forecast(id):
     df = pd.read_csv("../%s.csv" % id, sep=str, delimiter=',',names=['values'], header=0, error_bad_lines=False,warn_bad_lines=False,keep_default_na=True)
   #preprocessing 
   
-    aValues = df['values'].to_numpy() # array of values data
-    logdata = np.log(aValues) # log transform
+    dataframe = df['values'].to_numpy() # array of values data
+    logdata = np.log(dataframe) # log transform
     #logdiff=logdata.diff()
     cutpoint = int(len(df) * 0.91)
     horizon_data_length = len(df) - cutpoint
@@ -56,7 +56,7 @@ def forecast(id):
     sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
     sfit = sarima_model.fit()
     print(sfit.summary())
-    sfit.plot_diagnostics(figsize=(10, 6))
+   
     #plt.show()
   
     # Predictions of y values based on "model", aka fitted values
@@ -74,7 +74,7 @@ def forecast(id):
 
     yfore = []
     for j in range(0, horizon_data_length):
-        print("Actual {}  {:.2f} forcast {:.2f}".format(id, j, forecast_val[j-1]))
+        print("Actual {0} {1} {2}" .format(id, j, forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
   
 
