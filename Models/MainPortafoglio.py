@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO","All_Bonds", "US_Treasury"]
+serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO"]
 
 valoriDiforcast = []
 
@@ -83,14 +83,15 @@ def forecast(id):
     plt.plot(logdata , label='Log Data')
     plt.plot(ypred, color='red', label='Prediction')
     plt.plot(yfore, color='green', label='Forecast')
-    plt.plot([None for i in ypred] + [x for x in yfore])
-    plt.title(" forcast {}".format(id))
+    plt.title(" forcast of the serie  {}".format(id))
     plt.legend()
     #plt.title(label)
     
   
     #plt.show()
     print_figure(plt.gcf())
+    # simple recosntruction
+    reconstruct = np.exp(np.r_[train[i],test[i]]) # simple recosntruction
     
     return yfore, horizon_data_length
 
@@ -98,8 +99,8 @@ if len(sys.argv) == 2:
     forecast(sys.argv[1])
   # print(sys.argv[1])
 else:
-    for i in range(len(indices)):
-        f, horizon_data_length = forecast(indices[i])
+    for i in range(len(serie)):
+        f, horizon_data_length = forecast(serie[i])
         valoriDiforcast.append(f)
         
     portfolioInitialValue = 100000
