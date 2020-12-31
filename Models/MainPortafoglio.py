@@ -1,7 +1,7 @@
 
 #import pmdarima as pm # pip install pmdarima
 #from pandas.core.common import flatten
-import os, sys, io, base64,math
+import os, sys, io, base64
 import pandas as pd, matplotlib.pyplot as plt , numpy as np
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -80,12 +80,10 @@ def forecast(id):
 
     # Plot
     plt.clf()
-    plt.plot(logdata)
-    plt.plot(ypred, color='red', label='prediction onsample')
-    plt.plot(yfore,linewidth=2, markersize=12)
+    plt.plot(logdata , label='Log Data')
+    plt.plot(ypred, color='red', label='Prediction')
+    plt.plot(yfore, color='green', label='Forecast')
     plt.plot([None for i in ypred] + [x for x in yfore])
-    plt.plot(np.concatenate((np.full(npast,np.nan),ypred[:,0])))
-    plt.plot(np.concatenate((np.full(len(train)+npast,np.nan), yfore[:,0])))
     plt.title(" forcast {}".format(id))
     plt.legend()
     #plt.title(label)
