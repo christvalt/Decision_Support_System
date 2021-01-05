@@ -93,7 +93,9 @@ def forecast(id):
     # simple recosntruction
    # yfore1=yfore.pd()
     for x in range(0,horizon_data_length):
-        print("ricostruzione dei dati".format( reconstruct = np.exp(np.r_[train[j-1],test[j-1]])))
+        reconstruct=[]
+        reconstruct = np.exp(np.r_[train[j-1],test[j-1]])
+        print("ricostruzione dei dati"+str(reconstruct[0]))
         #reconstruct = np.exp(np.r_[train[i],test[i]]) # simple recosntruction
     
     return yfore, horizon_data_length
