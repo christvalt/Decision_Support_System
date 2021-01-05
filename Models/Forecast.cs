@@ -28,6 +28,7 @@ namespace SsdWebApi
                 if (indices.Contains(attribute)) {
                     command = command + " " + attribute;
                 }
+                Console.WriteLine("test1"+command);
                 string list = pr.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
