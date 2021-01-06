@@ -16,6 +16,7 @@ os.chdir(dname)
 serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO"]
 
 valoriDiforcast = []
+expdata=[]
 
 def print_figure(fig):
 	"""
@@ -67,7 +68,7 @@ def forecast(id):
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
     forecast_val=forecast_val[1:]
-    #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
 
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -76,14 +77,19 @@ def forecast(id):
     for j in range(0, horizon_data_length):
         print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
+        
+    expdata = np.exp(ypred) # unlog
+    expfore = np.exp(yfore)
+    print("expo".format(expdata))
+   # print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
   
 
     # Plot
     plt.clf()
     plt.plot(logdata , label='Log Data')
-    plt.plot(ypred, color='red', label='Prediction')
-    plt.plot(yfore, color='green', label='Forecast')
-    plt.title(" Time Serie Forcast Of  {}".format(id))
+    plt.plot(expdata, color='red', label='Prediction')
+    plt.plot(expfore, color='green', label='Forecast')
+    plt.title(" Time Serie Forcast of  {}".format(id))
     plt.legend()
     #plt.title(label)
     
@@ -92,6 +98,8 @@ def forecast(id):
     print_figure(plt.gcf())
     # simple recosntruction
    # yfore1=yfore.pd()
+   
+ 
     for x in range(0,horizon_data_length):
         reconstruct=[]
         reconstruct = np.exp(np.r_[train[j-1],test[j-1]])
