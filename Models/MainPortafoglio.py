@@ -83,7 +83,7 @@ def forecast(id):
     plt.plot(logdata , label='Log Data')
     plt.plot(ypred, color='red', label='Prediction')
     plt.plot(yfore, color='green', label='Forecast')
-    plt.title(" forcast of the serie  {}".format(id))
+    plt.title(" Time Serie Forcast Of  {}".format(id))
     plt.legend()
     #plt.title(label)
     
