@@ -68,7 +68,7 @@ def forecast(id):
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
     forecast_val=forecast_val[1:]
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+    forecast_ci=pd.Series(forecast_ci)
 
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -80,18 +80,20 @@ def forecast(id):
         
     expdata = np.exp(ypred) # unlog
     expfore = np.exp(yfore)
-    print("expo".format(expdata))
-   # print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
-  
+
 
     # Plot
     plt.clf()
-    plt.plot(logdata , label='Log Data')
-    plt.plot(expdata, color='red', label='Prediction')
-    plt.plot(expfore, color='green', label='Forecast')
-    plt.title(" Time Serie Forcast of  {}".format(id))
+    plt.plot(logdata, label='LogData')
+    plt.plot(ypred, color='brown', label='Predictions')
+    plt.fill_between(forecast_ci.index,
+                    forecast_ci.iloc[:, 0],
+                    forecast_ci.iloc[:, 1], color='k', alpha=.25)
+    plt.plot(forecast_val)
+    plt.xlabel('time');plt.ylabel('sales')
+
+    plt.title("ARIMA forecast of {}".format(id))
     plt.legend()
-    #plt.title(label)
     
   
     #plt.show()
