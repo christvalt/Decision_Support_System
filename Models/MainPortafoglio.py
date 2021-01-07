@@ -16,8 +16,8 @@ os.chdir(dname)
 serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
 
 valoriDiforcast = []
-reconstruct = []
-expfore=[]
+reconstructTrain = []
+reconstructforecast=[]
 
 
 def print_figure(fig):
@@ -32,7 +32,7 @@ def print_figure(fig):
 # Accuracy metrics
 def forecast_accuracy(forecast_val, test):
 
-    rmse = np.mean((forecast_val - test) ** 2) ** .0  # RMSE
+    rmse = np.mean((forecast_val - test) ** 2) ** .471  # RMSE
     return({ 'rmse':rmse})
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -50,6 +50,11 @@ def forecast(id):
     train1 = dataframe[:cutpoint]
     test = logdata[cutpoint:]
     test=test[0:]
+        #seasonal decompose
+    result = seasonal_decompose(train, model='multiplicative',freq=12)
+    result.plot()
+
+
     
     ##Autocorrelazione more good
     import statsmodels.api as sm
@@ -80,11 +85,12 @@ def forecast(id):
     for j in range(0, horizon_data_length):
         print("Actual {} {} forcast {:.2f}".format(id,j,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
-        
     #data riconstruction
+    yplog = pd.Series(yfore)    
     expdata = np.exp(ypred) 
-    reconstruct.append(expdata)
-    expfore=np.exp(yfore)
+    reconstructTrain.append(expdata)
+    expfore=np.exp(yplog)
+    reconstructforecast.append(expfore)
    
     # Plot
     plt.clf()
