@@ -11,7 +11,6 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 indices = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
-indices=indices[1:]
 
 result_forecasts = []
 
@@ -77,7 +76,7 @@ def forecast(index):
                      lower_series,
                      upper_series,
                      color='k', alpha=.15)
-    plt.title("ARIMA forecast of vvvvvvv{}".format(index))
+    plt.title("ARIMA forecast of {}".format(index))
     plt.legend()
   
     #plt.show()
