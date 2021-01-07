@@ -55,7 +55,7 @@ def forecast(id):
     plt.show
    
   
-    sarima_model = SARIMAX(train1, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
+    sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
     sfit = sarima_model.fit()
     print(sfit.summary())
     sfit.plot_diagnostics(figsize=(10, 6))
