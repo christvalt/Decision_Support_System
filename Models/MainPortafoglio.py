@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
+serie = ["SP_500"]
 
 valoriDiforcast = []
 reconstruct = []
@@ -61,25 +61,34 @@ def forecast(id):
     error_action='ignore',
     suppress_warnings=True,
     stepwise=True) # False full grid
+    morder = model.order; print("Sarimax order {0}".format(morder))
+    mseasorder = model.seasonal_order;
+    print("Sarimax seasonal order {0}".format(mseasorder))
+    
+
+
   
     # Predictions of y values based on "model", aka fitted values
     ypred = model.predict_in_sample(start=1, end=len(train))
     forecast_val, confint = model.predict(n_periods=horizon_data_length, return_conf_int=True)
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
-    
+    #valutation of result
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
+    #insert value 
     yfore = []
     for j in range(0, horizon_data_length):
         print("Actual {} {} forcast {:.2f}".format(id,j,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
+        reconstruct = np.exp(np.r_[train,test])
+        print("esempio"+str(reconstruct))
       
     # Plot
     plt.clf()
-    plt.plot(logdata)
-    plt.plot(ypred)
+    plt.plot(logdata, label='LogData')
+    plt.plot(ypred, label='Predict')
+    plt.plot(yfore, color='darkgreen', label='Forecast')
     plt.plot([None for i in ypred] + [x for x in yfore])
-    plt.xlabel('time');plt.ylabel('value')
+    plt.xlabel('index');plt.ylabel('log')
     plt.title("Time Serie Forcast of {}".format(id))
     plt.legend()
     
@@ -101,10 +110,10 @@ else:
 
         
     portfolioInitialValue = 100000
-    numvar = 7
+    numvar = 1
     xmin = 0.05
     xmax = 0.7
-    niter = 100
+    niter = 1
     popsize = 70
     nhood_size = 7
         #run optimizzation algorithm
