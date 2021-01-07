@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds"]
+serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
 
 valoriDiforcast = []
 reconstruct = []
@@ -54,8 +54,7 @@ def forecast(id):
     import statsmodels.api as sm
     sm.graphics.tsa.plot_acf(df.values, lags=10)
     plt.show
-   
-  
+    # run my model 
     model = pm.auto_arima(train, start_p=1, start_q=1,
     test='adf', max_p=3, max_q=3,
     d=1, trace=True,
@@ -81,7 +80,7 @@ def forecast(id):
     plt.plot(ypred)
     plt.plot([None for i in ypred] + [x for x in yfore])
     plt.xlabel('time');plt.ylabel('sales')
-    plt.title("ARIMA forecast of {}".format(id))
+    plt.title("Time Serie Forcast of {}".format(id))
     plt.legend()
     
   
@@ -102,16 +101,16 @@ else:
 
         
     portfolioInitialValue = 100000
-    numvar = 6
+    numvar = 7
     xmin = 0.05
     xmax = 0.7
-    niter = 2
+    niter = 100
     popsize = 70
     nhood_size = 7
         #run optimizzation algorithm
     PSO = ParSwarm.ParSwarmOpt(xmin, xmax)
     res = PSO.pso_solve(popsize, numvar, niter, nhood_size, portfolioInitialValue, horizon_data_length, valoriDiforcast)
-    print("test value is".format(numvar,popsize))
+   # print("test value is".format(numvar,popsize))
     #print portafoglio value %
     print("Portfolio: ", end='')
     for value in res.xsolbest:
