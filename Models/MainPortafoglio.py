@@ -13,10 +13,11 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-serie = ["SP_500"]
+serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"]
 
 valoriDiforcast = []
 reconstruct = []
+expfore=[]
 
 
 def print_figure(fig):
@@ -79,9 +80,12 @@ def forecast(id):
     for j in range(0, horizon_data_length):
         print("Actual {} {} forcast {:.2f}".format(id,j,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
-        reconstruct = np.exp(np.r_[train,test])
-        print("esempio"+str(reconstruct))
-      
+        
+    #data riconstruction
+    expdata = np.exp(ypred) 
+    reconstruct.append(expdata)
+    expfore=np.exp(yfore)
+   
     # Plot
     plt.clf()
     plt.plot(logdata, label='LogData')
@@ -91,6 +95,7 @@ def forecast(id):
     plt.xlabel('index');plt.ylabel('log')
     plt.title("Time Serie Forcast of {}".format(id))
     plt.legend()
+  
     
   
     #plt.show()
@@ -106,7 +111,8 @@ else:
     for i in range(len(serie)):
         f, horizon_data_length = forecast(serie[i])
         valoriDiforcast.append(f)
-        reconstruct = np.exp(np.r_[valoriDiforcast])
+        
+        
 
         
     portfolioInitialValue = 100000
