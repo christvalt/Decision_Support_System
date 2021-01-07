@@ -22,7 +22,7 @@ namespace SsdWebApi
             
             try
             {
-                string command = $"Models/MainPortafoglio.py";
+                string command = $"Models/forecastArima.py";
                 string[] indices = new string[]{"SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds", "US_Treasury"};
                 
                 if (indices.Contains(attribute)) {
