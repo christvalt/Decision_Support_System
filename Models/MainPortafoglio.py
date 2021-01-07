@@ -81,21 +81,16 @@ def forecast(id):
         print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
        
-        
-    expdata = np.exp(ypred) # unlog
-    expfore = np.exp(yfore)
+    
   
     # Plot
     plt.clf()
-    plt.plot(logdata, label='LogData')
-    plt.plot(df)
-    plt.plot(ypred, color='brown', label='Predictions')
-
+    plt.plot(train1)
+    plt.plot(ypred)
     plt.plot([None for i in ypred] + [x for x in yfore])
     plt.xlabel('time');plt.ylabel('sales')
-    plt.plot(forecast_val)
-    plt.xlabel('time');plt.ylabel('sales')
 
+    
     plt.title("ARIMA forecast of {}".format(id))
     plt.legend()
     
