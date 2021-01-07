@@ -68,7 +68,7 @@ def forecast(id):
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
     forecast_val=forecast_val[1:]
-    #forecast_ci=pd.Series(forecast_ci,index=index_forecasts)
+    forecast_ci=pd.Series(forecast_ci)
 
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -77,24 +77,23 @@ def forecast(id):
     for j in range(0, horizon_data_length):
         print("Actual {} forcast {:.2f}".format(id,forecast_val[j-1]))
         yfore.append(forecast_val[j-1])
+        #  Postprocessing, reconstruction
+        train[0] = 0
+        reconstruct = np.exp(np.r_[train,test].cumsum()+logdata[0])
         
     expdata = np.exp(ypred) # unlog
     expfore = np.exp(yfore)
-    for x in range(0,len(ypred)):
-        ypred=np.exp(ypred)
-        print("out put value is ".format(ypred))
-
-
+  
     # Plot
     plt.clf()
     plt.plot(logdata, label='LogData')
     plt.plot(df)
     plt.plot(ypred, color='brown', label='Predictions')
-    '''
+ 
     plt.fill_between(forecast_ci.index,
                     forecast_ci.iloc[:, 0],
                     forecast_ci.iloc[:, 1], color='k', alpha=.25)
-   '''
+ 
     plt.plot(forecast_val)
     plt.xlabel('time');plt.ylabel('sales')
 
