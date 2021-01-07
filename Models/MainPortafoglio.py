@@ -79,7 +79,7 @@ def forecast(id):
     plt.plot(logdata)
     plt.plot(ypred)
     plt.plot([None for i in ypred] + [x for x in yfore])
-    plt.xlabel('time');plt.ylabel('sales')
+    plt.xlabel('time');plt.ylabel('value')
     plt.title("Time Serie Forcast of {}".format(id))
     plt.legend()
     
