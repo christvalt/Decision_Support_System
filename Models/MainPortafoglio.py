@@ -45,8 +45,9 @@ def forecast(id):
     cutpoint = int(len(df) * 0.91)
     horizon_data_length = len(df) - cutpoint
     train = logdata[:cutpoint]
+    train1 = dataframe[:cutpoint]
     test = logdata[cutpoint:]
-    test=test[1:]
+    test=test[0:]
     
     ##Autocorrelazione more good
     import statsmodels.api as sm
@@ -54,22 +55,22 @@ def forecast(id):
     plt.show
    
   
-    sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
+    sarima_model = SARIMAX(train1, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
     sfit = sarima_model.fit()
     print(sfit.summary())
     sfit.plot_diagnostics(figsize=(10, 6))
     #plt.show()
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+   # index_forecasts = pd.Series(range(df.index[-1] - horizon_data_length, df.index[-1]))
    
     # Predictions of y values based on "model", aka fitted values
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+   #index_forecasts = pd.Series(range(df.index[-1]+1  - horizon_data_length, df.index[-1]+1))
     ypred=sfit.predict(start=0,end=len(train))
     forewrap= sfit.get_forecast(steps=horizon_data_length)
     #intervalo di forcast interessante
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
-    forecast_val=forecast_val[1:]
-    forecast_ci=pd.Series(forecast_val[1:], index=index_forecasts)
+    forecast_val=forecast_val[0:]
+    #forecast_ci=pd.Series(forecast_val, index=index_forecasts)
     re=pd.Series(range)
     
     metrics = forecast_accuracy(forecast_val, test)
@@ -89,11 +90,9 @@ def forecast(id):
     plt.plot(logdata, label='LogData')
     plt.plot(df)
     plt.plot(ypred, color='brown', label='Predictions')
- 
-    plt.fill_between(forecast_ci.index,
-                    forecast_ci.iloc[:, 0],
-                    forecast_ci.iloc[:, 1], color='k', alpha=.25)
- 
+
+    plt.plot([None for i in ypred] + [x for x in yfore])
+    plt.xlabel('time');plt.ylabel('sales')
     plt.plot(forecast_val)
     plt.xlabel('time');plt.ylabel('sales')
 
@@ -105,13 +104,6 @@ def forecast(id):
     print_figure(plt.gcf())
     # simple recosntruction
    # yfore1=yfore.pd()
-   
- 
-    for x in range(0,horizon_data_length):
-        reconstruct=[]
-        reconstruct = np.exp(np.r_[train[j-1],test[j-1]])
-        print("ricostruzione dei dati"+str(len(reconstruct)))
-        #reconstruct = np.exp(np.r_[train[i],test[i]]) # simple recosntruction
     
     return yfore, horizon_data_length
 
