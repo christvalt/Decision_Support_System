@@ -1,5 +1,5 @@
 
-#import pmdarima as pm # pip install pmdarima
+import pmdarima as pm # pip install pmdarima
 #from pandas.core.common import flatten
 import os, sys, io, base64
 import pandas as pd, matplotlib.pyplot as plt , numpy as np
@@ -13,7 +13,7 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-serie = ["SP_500", "FTSE_MIB"]
+serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds"]
 
 valoriDiforcast = []
 reconstruct = []
@@ -56,23 +56,17 @@ def forecast(id):
     plt.show
    
   
-    sarima_model = SARIMAX(train, order=(1,0,1), seasonal_order=(0,1,1,5), enforce_stationarity=False, enforce_invertibility=False)
-    sfit = sarima_model.fit()
-    print(sfit.summary())
-    sfit.plot_diagnostics(figsize=(10, 6))
-    #plt.show()
-   # index_forecasts = pd.Series(range(df.index[-1] - horizon_data_length, df.index[-1]))
-   
+    model = pm.auto_arima(train, start_p=1, start_q=1,
+    test='adf', max_p=3, max_q=3,
+    d=1, trace=True,
+    error_action='ignore',
+    suppress_warnings=True,
+    stepwise=True) # False full grid
+  
     # Predictions of y values based on "model", aka fitted values
-   #index_forecasts = pd.Series(range(df.index[-1]+1  - horizon_data_length, df.index[-1]+1))
-    ypred=sfit.predict(start=0,end=len(train))
-    forewrap= sfit.get_forecast(steps=horizon_data_length)
-    #intervalo di forcast interessante
-    forecast_ci = forewrap.conf_int()
-    forecast_val = forewrap.predicted_mean
-    forecast_val=forecast_val[0:]
-    #forecast_ci=pd.Series(forecast_val, index=index_forecasts)
-    re=pd.Series(range)
+    ypred = model.predict_in_sample(start=1, end=len(train))
+    forecast_val, confint = model.predict(n_periods=horizon_data_length, return_conf_int=True)
+    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
     
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -83,7 +77,7 @@ def forecast(id):
       
     # Plot
     plt.clf()
-    plt.plot(train1)
+    plt.plot(logdata)
     plt.plot(ypred)
     plt.plot([None for i in ypred] + [x for x in yfore])
     plt.xlabel('time');plt.ylabel('sales')
@@ -108,7 +102,7 @@ else:
 
         
     portfolioInitialValue = 100000
-    numvar = 2
+    numvar = 6
     xmin = 0.05
     xmax = 0.7
     niter = 2
