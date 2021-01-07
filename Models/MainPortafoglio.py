@@ -13,9 +13,10 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-serie = ["SP_500", "FTSE_MIB", "GOLD_SPOT", "MSCI_EM", "MSCI_EURO", "All_Bonds"]
+serie = ["SP_500", "FTSE_MIB"]
 
 valoriDiforcast = []
+reconstruct = []
 
 
 def print_figure(fig):
@@ -103,9 +104,11 @@ else:
     for i in range(len(serie)):
         f, horizon_data_length = forecast(serie[i])
         valoriDiforcast.append(f)
+        reconstruct = np.exp(np.r_[valoriDiforcast])
+
         
     portfolioInitialValue = 100000
-    numvar = 6
+    numvar = 2
     xmin = 0.05
     xmax = 0.7
     niter = 2
