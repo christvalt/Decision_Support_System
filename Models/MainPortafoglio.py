@@ -122,10 +122,10 @@ else:
 
         
     portfolioInitialValue = 100000
-    numvar = 1
+    numvar = 7
     xmin = 0.05
     xmax = 0.7
-    niter = 1
+    niter = 100
     popsize = 70
     nhood_size = 7
         #run optimizzation algorithm
