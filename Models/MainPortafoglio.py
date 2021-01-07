@@ -61,14 +61,14 @@ def forecast(id):
     #plt.show()
   
     # Predictions of y values based on "model", aka fitted values
-    index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
+    #index_forecasts = pd.Series(range(df.index[-1] + 1 - horizon_data_length, df.index[-1] + 1))
     ypred=sfit.predict(start=0,end=len(train))
     forewrap = sfit.get_forecast(steps=horizon_data_length)
     #intervalo di forcast interessante
     forecast_ci = forewrap.conf_int()
     forecast_val = forewrap.predicted_mean
     forecast_val=forecast_val[1:]
-    forecast_ci=pd.Series(forecast_ci,index=index_forecasts)
+    #forecast_ci=pd.Series(forecast_ci,index=index_forecasts)
 
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -80,15 +80,21 @@ def forecast(id):
         
     expdata = np.exp(ypred) # unlog
     expfore = np.exp(yfore)
+    for x in range(0,len(ypred)):
+        ypred=np.exp(ypred)
+        print("out put value is ".format(ypred))
 
 
     # Plot
     plt.clf()
     plt.plot(logdata, label='LogData')
+    plt.plot(df)
     plt.plot(ypred, color='brown', label='Predictions')
+    '''
     plt.fill_between(forecast_ci.index,
                     forecast_ci.iloc[:, 0],
                     forecast_ci.iloc[:, 1], color='k', alpha=.25)
+   '''
     plt.plot(forecast_val)
     plt.xlabel('time');plt.ylabel('sales')
 
