@@ -1,9 +1,7 @@
-
-import pmdarima as pm # pip install pmdarima
-#from pandas.core.common import flatten
 import os, sys, io, base64
 import pandas as pd, matplotlib.pyplot as plt , numpy as np
 from statsmodels.tsa.arima_model import ARIMA
+import pmdarima as pm
 from statsmodels.tsa.seasonal import seasonal_decompose
 import PSO as ParSwarm
 import matplotlib.pyplot as plt
@@ -47,7 +45,6 @@ def forecast(id):
     cutpoint = int(len(df) * 0.91)
     horizon_data_length = len(df) - cutpoint
     train = logdata[:cutpoint]
-    train1 = dataframe[:cutpoint]
     test = logdata[cutpoint:]
     test=test[0:]
         #seasonal decompose
@@ -76,7 +73,7 @@ def forecast(id):
   
     # Predictions of y values based on "model", aka fitted values
     ypred = model.predict_in_sample(start=1, end=len(train))
-    forecast_val, confint = model.predict(n_periods=horizon_data_length, return_conf_int=True)
+    forecast_val, result = model.predict(n_periods=horizon_data_length, return_conf_int=True)
     #valutation of result
     metrics = forecast_accuracy(forecast_val, test)
     print("RMSE is "+id,metrics['rmse'])
@@ -92,7 +89,7 @@ def forecast(id):
     expfore=np.exp(yplog)
     reconstructforecast.append(expfore)
    
-    # Plot
+    # output plot graph
     plt.clf()
     plt.plot(logdata, label='LogData')
     plt.plot(ypred, label='Predict')
@@ -120,7 +117,7 @@ else:
         
         
 
-        
+      #Main program call and inizialization
     portfolioInitialValue = 100000
     numvar = 7
     xmin = 0.05
@@ -137,8 +134,8 @@ else:
     for value in res.xsolbest:
         print(value, end=' ')
     print("")
-    print("Return: {}".format(res.return_valuebest))
-    print("Devst: {}".format(res.devstbest))
+    print("Expected Return: {}".format(res.return_valuebest))
+    print("Standar_Devst: {}".format(res.devstbest))
    
-    #print("dd",sys.argv[1])
+
    

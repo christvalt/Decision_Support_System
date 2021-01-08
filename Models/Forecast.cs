@@ -28,7 +28,7 @@ namespace SsdWebApi
                 if (indices.Contains(attribute)) {
                     command = command + " " + attribute;
                 }
-                Console.WriteLine("test1"+command);
+                Console.WriteLine("On going.+..+...+...."+command);
                 string list = pr.runDosCommands(command);
 
                 if (string.IsNullOrWhiteSpace(list))
@@ -41,7 +41,12 @@ namespace SsdWebApi
                 string strBitmaps = "[";
                 foreach (string s in lines)
                 {
-                    if (s.StartsWith("MAPE") || s.StartsWith("Actual") || s.StartsWith("Return") || s.StartsWith("Devst") || s.StartsWith("Portfolio"))
+                    if (s.StartsWith("rmse") || s.StartsWith("Actual"))
+                    {
+                        Console.WriteLine(s);
+                        res += (s+"\\n");
+                    }
+                    if (s.StartsWith("Expected return") || s.StartsWith("Standar_Devst") || s.StartsWith("Portfolio"))
                     {
                         Console.WriteLine(s);
                         res += (s+"\\n");
@@ -63,8 +68,6 @@ namespace SsdWebApi
 				strBitmaps = strBitmaps.TrimEnd(',');
 				strBitmaps += "]";
 
-                //strBitmap = strBitmap.Substring(strBitmap.IndexOf("b'")); // begin of binary image
-                // strBitmap = strBitmap.Remove(strBitmap.Length-4).Trim(); // remove "exit" at the end
                 res += "\",\"img\":"+strBitmaps;
             }
             catch (Exception e)
