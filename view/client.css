@@ -1,0 +1,48 @@
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  top: 14px;
+  right: 10px;
+  width: 10;
+  height: 5;
+  padding: 1px 3px;
+  margin: 4px 4px 4px;
+
+}
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+.button {
+    background-color: #008CBA;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 13px 35px;
+    text-decoration: none;
+    text-align: center;
+    margin: 4px 4px 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    transition: all 0.5s;
+    cursor: pointer;
+    
+  }
+  .button Forcast:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover Forcast {
+    padding-right: 25px;
+  }
+  
+  .button:hover Forcast:after {
+    opacity: 1;
+    right: 0;
+  }
