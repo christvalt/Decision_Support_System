@@ -3,19 +3,21 @@ body {
   background-color: lightgrey;
   
 }
-.title{
+.h1{
 
   position: relative;
-  color: white
+  color: white;
+  text-align: center;
 
 }
 textarea {
   
   margin: auto;
   width: 50%;
-  border: 3px solid rgb(52, 138, 236);
+  border: 1px solid rgb(52, 138, 236);
   padding: 10px;
-  right: 0px;
+  right: 10px;
+  left: 50px;
   
 }
 
