@@ -134,9 +134,9 @@ function renderImage(images) {
 		baseStr64 = baseStr64.substring(0, baseStr64.length - 1);
 		baseStr64 = baseStr64.substring(2, baseStr64.length);
 		var image = new Image();
-		image.style = "width: 95%";
+		image.style = "width: 50%";
 		image.src = 'data:image/png;base64,' + baseStr64;
-		document.getElementById("charts").appendChild(image);
+		document.getElementById("image").appendChild(image);
 	});
 }
   

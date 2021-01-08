@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Decision Support System Client</title>
+    <title class="title">Decision Support System Client</title>
     <link rel="stylesheet" type="text/css" href="client.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -23,9 +23,9 @@
 <textarea id="txtarea" rows="15" cols="150" readonly> </textarea>
 </div>
 
-<label for="indices">Index:</label>
+<label for="indices"> All Time Serie Index  Select One:</label>
 <div class="custom-select" style="width:200px;"></div>
-<select name="indices" id="indices">
+<select class ="select" name="indices" id="indices">
   <option value="complete">Full portfolio</option>
   <option value="SP_500">SP_500</option>
   <option value="FTSE_MIB">FTSE_MIB</option>
@@ -40,7 +40,7 @@
 <button class="button" id="Button" style="vertical-align:middle" onclick="getIndexById();" ><span>Forcast </span></button>
 
 </div>
-<div id="charts">
+<div id="image">
 </div>
 </body>
 
